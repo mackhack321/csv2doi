@@ -25,3 +25,7 @@ yarn-error.log*
 # ignore Mack's csv and xml files that are generated during testing
 /src/scripts/*.csv
 /src/scripts/*.xml
+
+# ignore input csv and output xml files
+/src/scripts/uploads/*
+/src/scripts/downloads/*

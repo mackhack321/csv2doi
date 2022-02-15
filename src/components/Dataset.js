@@ -6,11 +6,23 @@ function Dataset() {
   const [depemail, setDepemail] = useState("");
   const [registrant, setRegistrant] = useState("");
   const [dbname, setDbname] = useState("");
-  const [response, setResponse] = useState("no response yet");
+  const [uploadedFile, setUploadedFile] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let res = await fetch("http://localhost:5003/dataset", {
+
+    const fileUpload = new FormData();
+    fileUpload.append("file", uploadedFile);
+
+    let uploadRes = await fetch("http://localhost:5003/upload", {
+      method: "POST",
+      mode: "cors",
+      body: fileUpload,
+    });
+
+    let uploadJson = await uploadRes.json();
+
+    let metadataRes = await fetch("http://localhost:5003/dataset", {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
@@ -20,18 +32,16 @@ function Dataset() {
         depemail: depemail,
         registrant: registrant,
         dbname: dbname,
+        fileID: uploadJson.fileID,
       }),
     });
 
-    let json = await res.json();
-    setResponse(json.filename);
+    let json = await metadataRes.json();
+    console.log(json.response);
   };
 
   const changeHandler = (event) => {
-    console.log(event.target.files[0]);
-    // setSelectedFile(event.target.files[0]);
-
-    // setIsSelected(true);
+    setUploadedFile(event.target.files[0]);
   };
 
   return (
