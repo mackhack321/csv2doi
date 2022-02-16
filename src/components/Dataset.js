@@ -54,7 +54,6 @@ export default function Dataset() {
   const changeHandler = (event) => {
     setUploadedFile(event.target.files[0]);
     setFileIsUploaded(true);
-    console.log("hello");
   };
 
   return (
@@ -181,7 +180,7 @@ export default function Dataset() {
                     <>
                       <p>File uploaded: {uploadedFile.name}</p>
                       <button
-                        className="px-3 py-2 bg-red-500 text-white rounded-md font-medium"
+                        className="px-3 py-2 bg-red-500 text-white rounded-md font-medium hover:bg-red-700"
                         type="button"
                         onClick={() => setFileIsUploaded(false)}
                       >

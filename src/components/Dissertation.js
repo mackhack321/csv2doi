@@ -158,7 +158,7 @@ export default function Dissertation() {
                     <>
                       <p>File uploaded: {uploadedFile.name}</p>
                       <button
-                        className="px-3 py-2 bg-red-500 text-white rounded-md font-medium"
+                        className="px-3 py-2 bg-red-500 text-white rounded-md font-medium hover:bg-red-700"
                         type="button"
                         onClick={() => setFileIsUploaded(false)}
                       >
