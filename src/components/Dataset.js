@@ -54,16 +54,17 @@ export default function Dataset() {
   const changeHandler = (event) => {
     setUploadedFile(event.target.files[0]);
     setFileIsUploaded(true);
+    console.log("hello");
   };
 
   return (
     <div className="App">
       <div>
-        <div className="bg-white w-screen px-4 bg-gray-100">
+        <div className="w-screen px-4 bg-gray-100">
           <div className="mt-5 md:mt-0 md:col-span-2">
             <form onSubmit={handleSubmit}>
               <div className="shadow sm:rounded-md sm:overflow-hidden">
-                <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
+                <div className="px-4 py-5 bg-white space-y-6 sm:p-6 rounded-md">
                   <div className="grid grid-cols-3 gap-6">
                     <div className="col-span-3 sm:col-span-2">
                       <label className="block text-sm font-medium text-gray-700">
@@ -71,6 +72,7 @@ export default function Dataset() {
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
+                          required
                           type="text"
                           value={batchID}
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
@@ -87,6 +89,7 @@ export default function Dataset() {
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
+                          required
                           type="text"
                           value={depname}
                           placeholder="Bluto Blutarsky"
@@ -103,7 +106,8 @@ export default function Dataset() {
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
-                          type="text"
+                          required
+                          type="email"
                           value={depemail}
                           placeholder="bblutarsky@faber.edu"
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
@@ -119,6 +123,7 @@ export default function Dataset() {
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
+                          required
                           type="text"
                           value={registrant}
                           placeholder="Faber College"
@@ -135,6 +140,7 @@ export default function Dataset() {
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
+                          required
                           type="text"
                           value={dbname}
                           placeholder="Faber Institutional Respository"
@@ -144,22 +150,21 @@ export default function Dataset() {
                       </div>
                     </div>
                   </div>
-                  {!fileIsUploaded
-                  ?
+                  {!fileIsUploaded ? (
                     <>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        File Upload
-                      </label>
-                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                        <div className="space-y-1 text-center">
-                          <div className="flex text-sm text-gray-600">
-                            <label
-                              htmlFor="file-upload"
-                              className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                            >
-                              <span>Upload a file</span>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">
+                          File Upload
+                        </label>
+                        <div>
+                          <label
+                            htmlFor="file-upload"
+                            className="relative cursor-pointer rounded-md font-medium text-white"
+                          >
+                            <div className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                              <span className="text-lg">Upload a CSV file</span>
                               <input
+                                required
                                 id="file-upload"
                                 name="file-upload"
                                 type="file"
@@ -167,23 +172,42 @@ export default function Dataset() {
                                 className="sr-only"
                                 onChange={changeHandler}
                               />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                          </div>
-                          <p className="text-xs text-gray-500">CSV Files Only</p>
+                            </div>
+                          </label>
                         </div>
                       </div>
-                    </div>
                     </>
-                  :
-                    <p>File uploaded: {uploadedFile.name}</p>
-                  }
+                  ) : (
+                    <>
+                      <p>File uploaded: {uploadedFile.name}</p>
+                      {/* <button
+                        type="button"
+                        id="button1"
+                        onClick={setFileIsUploaded(false)}
+                      >
+                        Change File
+                      </button> */}
+                    </>
+                  )}
                 </div>
-                <div className="px-4 py-3 bg-white text-right sm:px-6">
+                <div className="bg-gray-200 h-0.5" />
+                <div className="px-4 py-3 bg-white sm:px-6 rounded-md">
                   <button
                     type="submit"
-                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="text-lg inline-flex justify-center py-2 px-4 border border-transparent shadow-sm  font-medium rounded-md text-white bg-msugreen hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-7 w-7 pr-2"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
                     Convert to XML
                   </button>
                 </div>
@@ -192,49 +216,6 @@ export default function Dataset() {
           </div>
         </div>
       </div>
-      {/* start old form */}
-      {/* <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={batchID}
-          placeholder="Batch ID"
-          onChange={(e) => setBatchID(e.target.value)}
-        />
-        <input
-          type="text"
-          value={depname}
-          placeholder="Depositor Name"
-          onChange={(e) => setDepname(e.target.value)}
-        />
-        <input
-          type="text"
-          value={depemail}
-          placeholder="Depositor Email"
-          onChange={(e) => setDepemail(e.target.value)}
-        />
-        <input
-          type="text"
-          value={registrant}
-          placeholder="Registrant"
-          onChange={(e) => setRegistrant(e.target.value)}
-        />
-        <input
-          type="text"
-          value={dbname}
-          placeholder="Database Name"
-          onChange={(e) => setDbname(e.target.value)}
-        />
-
-        <button type="submit">Greet me</button>
-
-        <p>{response}</p>
-      </form> */}
     </div>
   );
 }
-
-// batchID = request.json["batchid"]
-// depname = request.json["depname"]
-// depemail = request.json["depemail"]
-// registrant = request.json["registrant"]
-// dbname = request.json["dbname"]

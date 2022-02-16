@@ -5,6 +5,7 @@ module.exports = {
       colors: {
         maroon: "#5D1725",
         msublue: "#007FA3",
+        msugreen: "#198754",
       },
     },
   },
