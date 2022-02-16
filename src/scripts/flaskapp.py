@@ -3,6 +3,8 @@ import random
 from string import ascii_lowercase
 from flask_cors import CORS
 
+import dataset as converter
+
 
 app = Flask(__name__)
 CORS(app)
@@ -13,7 +15,7 @@ def upload():
     fileID = f"{''.join(random.choice(ascii_lowercase) for i in range(10))}"
 
     csvfile = request.files['file']
-    destination = f"./uploads/{fileID}.py"
+    destination = f"./temp/{fileID}"
     csvfile.save(destination)
 
     response = jsonify({"fileID": fileID})
@@ -44,9 +46,10 @@ def dataset():
 
     fileID = request.json["fileID"]
 
-    # makes filename that looks like "[depositor name] [5 random lowercase letters].xml"
+    xml = converter.go(batchID, depname, depemail, registrant, dbname, fileID)
+
     response = jsonify(
-        {"response": f"roger wilco. heard you with file ID {fileID}"})
+        {"response": xml})
     return response
 
 
