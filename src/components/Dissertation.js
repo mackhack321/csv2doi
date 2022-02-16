@@ -87,7 +87,7 @@ export default function Dissertation() {
                         <input
                           type="text"
                           value={depname}
-                          placeholder="Bluto Blutarsky"
+                          placeholder="John Smith"
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                           onChange={(e) => setDepname(e.target.value)}
                         />
@@ -103,7 +103,7 @@ export default function Dissertation() {
                         <input
                           type="text"
                           value={depemail}
-                          placeholder="bblutarsky@faber.edu"
+                          placeholder="someone@msstate.edu"
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                           onChange={(e) => setDepemail(e.target.value)}
                         />
@@ -119,7 +119,7 @@ export default function Dissertation() {
                         <input
                           type="text"
                           value={registrant}
-                          placeholder="Faber College"
+                          placeholder="Mississippi State University"
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                           onChange={(e) => setRegistrant(e.target.value)}
                         />
@@ -158,6 +158,7 @@ export default function Dissertation() {
                     <>
                       <p>File uploaded: {uploadedFile.name}</p>
                       <button
+                        className="px-3 py-2 bg-red-500 text-white rounded-md font-medium"
                         type="button"
                         onClick={() => setFileIsUploaded(false)}
                       >
