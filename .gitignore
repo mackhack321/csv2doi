@@ -29,3 +29,6 @@ yarn-error.log*
 # ignore input csv and output xml files
 /src/scripts/uploads/*
 /src/scripts/downloads/*
+
+# ignore imported python modules that get cached
+**/__pycache__/
