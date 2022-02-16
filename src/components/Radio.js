@@ -11,7 +11,6 @@ export default function Radio() {
           {/* <h1>Radio value is : {radio}</h1> */}
           <input
             type="radio"
-            className=""
             checked={radio === "dataset"}
             value="dataset"
             onChange={(e) => {
