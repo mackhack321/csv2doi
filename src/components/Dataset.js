@@ -49,7 +49,7 @@ export default function Dataset() {
     let xmlJson = await metadataRes.json();
 
     if (xmlJson.response === "bad headers") {
-      alert("BAD HEADERS OMEGALUL");
+      alert("bad csv headers");
     } else {
       downloadAsFile(xmlJson.response);
     }
