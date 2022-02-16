@@ -63,14 +63,14 @@ export default function Dissertation() {
                   <div className="grid grid-cols-3 gap-6">
                     <div className="col-span-3 sm:col-span-2">
                       <label className="block text-sm font-medium text-gray-700">
-                        Batch ID
+                        DOI Batch ID
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
                           type="text"
                           value={batchID}
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                          placeholder="Batch ID"
+                          placeholder="my_batch_id"
                           onChange={(e) => setBatchID(e.target.value)}
                         />
                       </div>
@@ -85,7 +85,7 @@ export default function Dissertation() {
                         <input
                           type="text"
                           value={depname}
-                          placeholder="Depositor Name"
+                          placeholder="Bluto Blutarsky"
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                           onChange={(e) => setDepname(e.target.value)}
                         />
@@ -101,7 +101,7 @@ export default function Dissertation() {
                         <input
                           type="text"
                           value={depemail}
-                          placeholder="Depositor Email"
+                          placeholder="bblutarsky@faber.edu"
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                           onChange={(e) => setDepemail(e.target.value)}
                         />
@@ -117,7 +117,7 @@ export default function Dissertation() {
                         <input
                           type="text"
                           value={registrant}
-                          placeholder="Registrant"
+                          placeholder="Faber College"
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                           onChange={(e) => setRegistrant(e.target.value)}
                         />
@@ -158,7 +158,7 @@ export default function Dissertation() {
                     type="submit"
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
-                    Save
+                    Convert to XML
                   </button>
                 </div>
               </div>
