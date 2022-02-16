@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Alert from "./Alert";
 
 function downloadAsFile(data) {
   const element = document.createElement("a");
@@ -17,9 +18,13 @@ export default function Dataset() {
   const [dbname, setDbname] = useState("");
   const [uploadedFile, setUploadedFile] = useState();
   const [fileIsUploaded, setFileIsUploaded] = useState(false);
+  const [errorHappened, setErrorHappened] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setErrorHappened(false);
 
     const fileUpload = new FormData();
     fileUpload.append("file", uploadedFile);
@@ -34,7 +39,8 @@ export default function Dataset() {
         body: fileUpload,
       });
     } catch (error) {
-      alert("problem uploading file");
+      setErrorMessage("Error during file upload");
+      setErrorHappened(true);
     }
 
     let uploadJson = await uploadRes.json();
@@ -54,13 +60,17 @@ export default function Dataset() {
         }),
       });
     } catch (error) {
-      alert("problem during conversion");
+      setErrorMessage("Error during conversion");
+      setErrorHappened(true);
     }
 
     let xmlJson = await metadataRes.json();
 
     if (xmlJson.response === "bad headers") {
-      alert("bad csv headers");
+      setErrorMessage(
+        "The headers in your CSV file do not match the expected values"
+      );
+      setErrorHappened(true);
     } else {
       downloadAsFile(xmlJson.response);
     }
@@ -79,6 +89,7 @@ export default function Dataset() {
             <form onSubmit={handleSubmit}>
               <div className="shadow sm:rounded-md sm:overflow-hidden">
                 <div className="px-4 py-5 bg-white space-y-6 sm:p-6 rounded-md">
+                  {errorHappened && <Alert message={errorMessage} />}
                   <div className="grid grid-cols-3 gap-6">
                     <div className="col-span-3 sm:col-span-2">
                       <label className="block text-sm font-medium text-gray-700">
