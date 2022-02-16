@@ -45,9 +45,9 @@ export default function Dataset() {
       }),
     });
 
-    let json = await metadataRes.json();
+    let xmlJson = await metadataRes.json();
 
-    downloadAsFile(json.response);
+    downloadAsFile(xmlJson.response);
   };
 
   const changeHandler = (event) => {
