@@ -3,7 +3,8 @@ import random
 from string import ascii_lowercase
 from flask_cors import CORS
 
-import dataset as converter
+import dataset as datasetConverter
+import dissertation as dissertationConverter
 
 
 app = Flask(__name__)
@@ -22,18 +23,21 @@ def upload():
     return response
 
 
-@app.route("/dissertation")
+@app.route("/dissertation", methods=["POST"])
 def dissertation():
     batchID = request.json["batchid"]
     depname = request.json["depname"]
     depemail = request.json["depemail"]
     registrant = request.json["registrant"]
+
     fileID = request.json["fileID"]
 
-    # makes filename that looks like "[depositor name] [5 random lowercase letters].xml"
-    filename = f"{depname} {''.join(random.choice(ascii_lowercase) for i in range(5))}.xml"
+    xml = dissertationConverter.go(
+        batchID, depname, depemail, registrant, fileID)
 
-    return jsonify(filename=filename)
+    response = jsonify(
+        {"response": xml})
+    return response
 
 
 @app.route("/dataset", methods=["POST"])
@@ -46,7 +50,8 @@ def dataset():
 
     fileID = request.json["fileID"]
 
-    xml = converter.go(batchID, depname, depemail, registrant, dbname, fileID)
+    xml = datasetConverter.go(
+        batchID, depname, depemail, registrant, dbname, fileID)
 
     response = jsonify(
         {"response": xml})

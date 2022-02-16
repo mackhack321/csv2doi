@@ -1,16 +1,36 @@
 import { useState } from "react";
 
-function Dissertation() {
+function downloadAsFile(data) {
+  const element = document.createElement("a");
+  const file = new Blob([data], { type: "text/xml" });
+  element.href = URL.createObjectURL(file);
+  element.download = "output.xml";
+  document.body.appendChild(element);
+  element.click();
+}
+
+export default function Dissertation() {
   const [batchID, setBatchID] = useState("");
   const [depname, setDepname] = useState("");
   const [depemail, setDepemail] = useState("");
   const [registrant, setRegistrant] = useState("");
-
-  const [response, setResponse] = useState("no response yet");
+  const [uploadedFile, setUploadedFile] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let res = await fetch("http://localhost:5003/dataset", {
+
+    const fileUpload = new FormData();
+    fileUpload.append("file", uploadedFile);
+
+    let uploadRes = await fetch("http://localhost:5003/upload", {
+      method: "POST",
+      mode: "cors",
+      body: fileUpload,
+    });
+
+    let uploadJson = await uploadRes.json();
+
+    let metadataRes = await fetch("http://localhost:5003/dissertation", {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
@@ -19,28 +39,23 @@ function Dissertation() {
         depname: depname,
         depemail: depemail,
         registrant: registrant,
+        fileID: uploadJson.fileID,
       }),
     });
 
-    let json = await res.json();
-    setResponse(json.filename);
+    let json = await metadataRes.json();
+
+    downloadAsFile(json.response);
+  };
+
+  const changeHandler = (event) => {
+    setUploadedFile(event.target.files[0]);
   };
 
   return (
     <div className="App">
       <div>
-        <div className="md:grid md:grid-cols-3 md:gap-6">
-          <div className="md:col-span-1">
-            <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Profile
-              </h3>
-              <p className="mt-1 text-sm text-gray-600">
-                This information will be displayed publicly so be careful what
-                you share.
-              </p>
-            </div>
-          </div>
+        <div className="bg-white w-screen">
           <div className="mt-5 md:mt-0 md:col-span-2">
             <form onSubmit={handleSubmit}>
               <div className="shadow sm:rounded-md sm:overflow-hidden">
@@ -116,20 +131,6 @@ function Dissertation() {
                     </label>
                     <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                       <div className="space-y-1 text-center">
-                        <svg
-                          className="mx-auto h-12 w-12 text-gray-400"
-                          stroke="currentColor"
-                          fill="none"
-                          viewBox="0 0 48 48"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                            strokeWidth={2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
                         <div className="flex text-sm text-gray-600">
                           <label
                             htmlFor="file-upload"
@@ -140,7 +141,9 @@ function Dissertation() {
                               id="file-upload"
                               name="file-upload"
                               type="file"
+                              accept=".csv"
                               className="sr-only"
+                              onChange={changeHandler}
                             />
                           </label>
                           <p className="pl-1">or drag and drop</p>
@@ -165,49 +168,41 @@ function Dissertation() {
       </div>
       {/* start old form */}
       {/* <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={batchID}
-          placeholder="Batch ID"
-          onChange={(e) => setBatchID(e.target.value)}
-        />
-        <input
-          type="text"
-          value={depname}
-          placeholder="Depositor Name"
-          onChange={(e) => setDepname(e.target.value)}
-        />
-        <input
-          type="text"
-          value={depemail}
-          placeholder="Depositor Email"
-          onChange={(e) => setDepemail(e.target.value)}
-        />
-        <input
-          type="text"
-          value={registrant}
-          placeholder="Registrant"
-          onChange={(e) => setRegistrant(e.target.value)}
-        />
-        <input
-          type="text"
-          value={dbname}
-          placeholder="Database Name"
-          onChange={(e) => setDbname(e.target.value)}
-        />
-
-        <button type="submit">Greet me</button>
-
-        <p>{response}</p>
-      </form> */}
+          <input
+            type="text"
+            value={batchID}
+            placeholder="Batch ID"
+            onChange={(e) => setBatchID(e.target.value)}
+          />
+          <input
+            type="text"
+            value={depname}
+            placeholder="Depositor Name"
+            onChange={(e) => setDepname(e.target.value)}
+          />
+          <input
+            type="text"
+            value={depemail}
+            placeholder="Depositor Email"
+            onChange={(e) => setDepemail(e.target.value)}
+          />
+          <input
+            type="text"
+            value={registrant}
+            placeholder="Registrant"
+            onChange={(e) => setRegistrant(e.target.value)}
+          />
+          <input
+            type="text"
+            value={dbname}
+            placeholder="Database Name"
+            onChange={(e) => setDbname(e.target.value)}
+          />
+  
+          <button type="submit">Greet me</button>
+  
+          <p>{response}</p>
+        </form> */}
     </div>
   );
 }
-
-export default Dissertation;
-
-// batchID = request.json["batchid"]
-// depname = request.json["depname"]
-// depemail = request.json["depemail"]
-// registrant = request.json["registrant"]
-// dbname = request.json["dbname"]

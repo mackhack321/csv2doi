@@ -9,7 +9,7 @@ function downloadAsFile(data) {
   element.click();
 }
 
-function Dataset() {
+export default function Dataset() {
   const [batchID, setBatchID] = useState("");
   const [depname, setDepname] = useState("");
   const [depemail, setDepemail] = useState("");
@@ -224,8 +224,6 @@ function Dataset() {
     </div>
   );
 }
-
-export default Dataset;
 
 // batchID = request.json["batchid"]
 // depname = request.json["depname"]

@@ -1,13 +1,14 @@
 import datetime  # to get the current time because crossref wants a timestamp
 import csv  # to read the input data into a form the program can use
-CSV_FILENAME = "dissertation.csv"  # csv dataset to use
-XML_FILENAME = "dissertation.xml"  # where to store the generated XML
+from os import remove  # to delete the input csv file when done
+# CSV_FILENAME = "dissertation.csv"  # csv dataset to use
+# XML_FILENAME = "dissertation.xml"  # where to store the generated XML
 
-# information used in making the head
-DOI_BATCH_ID = "my_doi_batch"
-DEPOSITOR_NAME = "Mack Stanley"
-DEPOSITOR_EMAIL = "jms2099@msstate.edu"
-REGISTRANT = "Mississippi State University"
+# # information used in making the head
+# DOI_BATCH_ID = "my_doi_batch"
+# DEPOSITOR_NAME = "Mack Stanley"
+# DEPOSITOR_EMAIL = "jms2099@msstate.edu"
+# REGISTRANT = "Mississippi State University"
 
 
 def makeTimestamp():  # crossref wants YYYYMMDDhhmmss
@@ -22,18 +23,18 @@ def makeTimestamp():  # crossref wants YYYYMMDDhhmmss
     return time
 
 
-def makeHead():
+def makeHead(batchID, depname, depemail, registrant):
     head = ""
 
-    head += f"""    <doi_batch_id>{DOI_BATCH_ID}</doi_batch_id>
+    head += f"""    <doi_batch_id>{batchID}</doi_batch_id>
     <timestamp>{makeTimestamp()}</timestamp>\n"""
 
     head += f"""    <depositor>
-      <depositor_name>{DEPOSITOR_NAME}</depositor_name>
-      <email_address>{DEPOSITOR_EMAIL}</email_address>
+      <depositor_name>{depname}</depositor_name>
+      <email_address>{depemail}</email_address>
     </depositor>\n"""
 
-    head += f"    <registrant>{REGISTRANT}</registrant>\n"
+    head += f"    <registrant>{registrant}</registrant>\n"
 
     return head
 
@@ -85,7 +86,7 @@ def makeBody(rows):
     return body
 
 
-def rowsToXML(rows):
+def rowsToXML(rows, batchID, depname, depemail, registrant):
     xml = ""
     xml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
     xml += """<doi_batch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -93,7 +94,7 @@ def rowsToXML(rows):
     xmlns="http://www.crossref.org/schema/4.8.0" version="4.8.0">\n"""
 
     xml += "  <head>\n"
-    xml += makeHead()
+    xml += makeHead(batchID, depname, depemail, registrant)
     xml += "  </head>\n"
 
     xml += "  <body>\n"
@@ -107,20 +108,25 @@ def rowsToXML(rows):
     return xml
 
 
-def writeXMLToFile(xml):
-    print(f"Writing generated XML to {XML_FILENAME}...")
-    with open(XML_FILENAME, 'w') as file:
-        file.write(xml)
+# def writeXMLToFile(xml):
+#     print(f"Writing generated XML to {XML_FILENAME}...")
+#     with open(XML_FILENAME, 'w') as file:
+#         file.write(xml)
+#         file.close()
+#     print(f"Successfully wrote XML to {XML_FILENAME}")
+
+
+def go(batchID, depname, depemail, registrant, fileID):
+    rows = []
+    with open(f"temp/{fileID}", 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            rows.append(row)
         file.close()
-    print(f"Successfully wrote XML to {XML_FILENAME}")
 
+    xml = rowsToXML(rows, batchID, depname, depemail, registrant)
+    # writeXMLToFile(xml)
 
-rows = []
-with open(CSV_FILENAME, 'r') as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        rows.append(row)
-    file.close()
+    remove(f"temp/{fileID}")
 
-xml = rowsToXML(rows)
-writeXMLToFile(xml)
+    return xml
