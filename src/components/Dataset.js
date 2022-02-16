@@ -180,13 +180,12 @@ export default function Dataset() {
                   ) : (
                     <>
                       <p>File uploaded: {uploadedFile.name}</p>
-                      {/* <button
+                      <button
                         type="button"
-                        id="button1"
-                        onClick={setFileIsUploaded(false)}
+                        onClick={() => setFileIsUploaded(false)}
                       >
                         Change File
-                      </button> */}
+                      </button>
                     </>
                   )}
                 </div>
