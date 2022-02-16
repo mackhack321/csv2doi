@@ -204,14 +204,16 @@ export default function Dataset() {
                     </>
                   ) : (
                     <>
-                      <p>File uploaded: {uploadedFile.name}</p>
-                      <button
-                        className="px-3 py-2 bg-red-500 text-white rounded-md font-medium hover:bg-red-700"
-                        type="button"
-                        onClick={() => setFileIsUploaded(false)}
-                      >
-                        Change File
-                      </button>
+                      <p>
+                        File uploaded: {uploadedFile.name}
+                        <button
+                          className="mx-5 px-3 py-2 bg-red-500 text-white rounded-md font-medium hover:bg-red-700"
+                          type="button"
+                          onClick={() => setFileIsUploaded(false)}
+                        >
+                          Change File
+                        </button>
+                      </p>
                     </>
                   )}
                 </div>
