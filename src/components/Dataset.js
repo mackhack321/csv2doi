@@ -24,27 +24,38 @@ export default function Dataset() {
     const fileUpload = new FormData();
     fileUpload.append("file", uploadedFile);
 
-    let uploadRes = await fetch("http://localhost:5003/upload", {
-      method: "POST",
-      mode: "cors",
-      body: fileUpload,
-    });
+    let uploadRes;
+    let metadataRes;
+
+    try {
+      uploadRes = await fetch("http://localhost:5003/upload", {
+        method: "POST",
+        mode: "cors",
+        body: fileUpload,
+      });
+    } catch (error) {
+      alert("problem uploading file");
+    }
 
     let uploadJson = await uploadRes.json();
 
-    let metadataRes = await fetch("http://localhost:5003/dataset", {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        batchid: batchID,
-        depname: depname,
-        depemail: depemail,
-        registrant: registrant,
-        dbname: dbname,
-        fileID: uploadJson.fileID,
-      }),
-    });
+    try {
+      metadataRes = await fetch("http://localhost:5003/dataset", {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          batchid: batchID,
+          depname: depname,
+          depemail: depemail,
+          registrant: registrant,
+          dbname: dbname,
+          fileID: uploadJson.fileID,
+        }),
+      });
+    } catch (error) {
+      alert("problem during conversion");
+    }
 
     let xmlJson = await metadataRes.json();
 
