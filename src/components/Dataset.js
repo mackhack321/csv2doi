@@ -48,7 +48,11 @@ export default function Dataset() {
 
     let xmlJson = await metadataRes.json();
 
-    downloadAsFile(xmlJson.response);
+    if (xmlJson.response === "bad headers") {
+      alert("BAD HEADERS OMEGALUL");
+    } else {
+      downloadAsFile(xmlJson.response);
+    }
   };
 
   const changeHandler = (event) => {

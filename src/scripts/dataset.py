@@ -14,6 +14,12 @@ from os import remove  # to delete the input csv file when done
 # DATABASE_TITLE = "Scholars Junction"
 
 
+def validateHeaders(headers):
+    validHeaders = ['firstname', 'lastname', 'orcid', 'title', 'creation date month', 'creation date day', 'creation date year',
+                    'publication date month', 'publication date day', 'publication date year', 'item number', 'description', 'doi', 'resource']
+    return headers == validHeaders
+
+
 def makeTimestamp():  # crossref wants YYYYMMDDhhmmss
     now = datetime.datetime.now()
     time = ""
@@ -163,9 +169,13 @@ def go(batchID, depname, depemail, registrant, dbname, fileID):
             rows.append(row)
         file.close()
 
+    remove(f"temp/{fileID}")
+
+    headersAreValid = validateHeaders(reader.fieldnames)
+    if not headersAreValid:
+        return "bad headers"
+
     xml = rowsToXML(rows, batchID, depname, depemail, registrant, dbname)
     # writeXMLToFile(xml)
-
-    remove(f"temp/{fileID}")
 
     return xml
