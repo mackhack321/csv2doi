@@ -15,6 +15,7 @@ export default function Dissertation() {
   const [depemail, setDepemail] = useState("");
   const [registrant, setRegistrant] = useState("");
   const [uploadedFile, setUploadedFile] = useState();
+  const [fileIsUploaded, setFileIsUploaded] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,6 +51,7 @@ export default function Dissertation() {
 
   const changeHandler = (event) => {
     setUploadedFile(event.target.files[0]);
+    setFileIsUploaded(true);
   };
 
   return (
@@ -125,33 +127,40 @@ export default function Dissertation() {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      File Upload
-                    </label>
-                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                      <div className="space-y-1 text-center">
-                        <div className="flex text-sm text-gray-600">
-                          <label
-                            htmlFor="file-upload"
-                            className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                          >
-                            <span>Upload a file</span>
-                            <input
-                              id="file-upload"
-                              name="file-upload"
-                              type="file"
-                              accept=".csv"
-                              className="sr-only"
-                              onChange={changeHandler}
-                            />
-                          </label>
-                          <p className="pl-1">or drag and drop</p>
+                  {!fileIsUploaded &&
+                    <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        File Upload
+                      </label>
+                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                        <div className="space-y-1 text-center">
+                          <div className="flex text-sm text-gray-600">
+                            <label
+                              htmlFor="file-upload"
+                              className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                            >
+                              <span>Upload a file</span>
+                              <input
+                                id="file-upload"
+                                name="file-upload"
+                                type="file"
+                                accept=".csv"
+                                className="sr-only"
+                                onChange={changeHandler}
+                              />
+                            </label>
+                            <p className="pl-1">or drag and drop</p>
+                          </div>
+                          <p className="text-xs text-gray-500">CSV Files Only</p>
                         </div>
-                        <p className="text-xs text-gray-500">CSV Files Only</p>
                       </div>
                     </div>
-                  </div>
+                    </>
+                  }
+                  {fileIsUploaded && 
+                    <p>File uploaded: {uploadedFile.name}</p>
+                  }
                 </div>
                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                   <button
