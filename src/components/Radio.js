@@ -7,6 +7,9 @@ export default function Radio() {
   return (
     <div className="">
       <form className="flex flex-col py-8 px-6 text-xl">
+        <label className="block font-medium text-gray-700">
+          Select Datatype
+        </label>
         <div className="justify-center">
           {/* <h1>Radio value is : {radio}</h1> */}
           <input
