@@ -127,7 +127,8 @@ export default function Dissertation() {
                     </div>
                   </div>
 
-                  {!fileIsUploaded &&
+                  {!fileIsUploaded
+                  ?
                     <>
                     <div>
                       <label className="block text-sm font-medium text-gray-700">
@@ -157,8 +158,7 @@ export default function Dissertation() {
                       </div>
                     </div>
                     </>
-                  }
-                  {fileIsUploaded && 
+                  :
                     <p>File uploaded: {uploadedFile.name}</p>
                   }
                 </div>
