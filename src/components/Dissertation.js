@@ -55,7 +55,7 @@ export default function Dissertation() {
   return (
     <div className="App">
       <div>
-        <div className="bg-white w-screen">
+        <div className="bg-gray-100 w-screen px-4">
           <div className="mt-5 md:mt-0 md:col-span-2">
             <form onSubmit={handleSubmit}>
               <div className="shadow sm:rounded-md sm:overflow-hidden">
@@ -153,7 +153,7 @@ export default function Dissertation() {
                     </div>
                   </div>
                 </div>
-                <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                <div className="px-4 py-3 bg-white text-right sm:px-6">
                   <button
                     type="submit"
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

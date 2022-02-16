@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       colors: {
         maroon: "#5D1725",
+        msublue: "#007FA3",
       },
     },
   },

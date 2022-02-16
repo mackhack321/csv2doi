@@ -3,10 +3,12 @@ import Radio from "./components/Radio";
 
 function App() {
   return (
-    <div className="flex">
-      <div className="mx-auto">
+    <div className="flex bg-gray-100">
+      <div className="">
         <Navbar />
-        <Radio />
+        <div className="">
+          <Radio />
+        </div>
       </div>
     </div>
   );
