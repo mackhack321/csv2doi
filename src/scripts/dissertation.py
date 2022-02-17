@@ -124,9 +124,9 @@ def go(batchID, depname, depemail, registrant, fileID):
             rows.append(row)
         file.close()
 
+    remove(f"temp/{fileID}")
+
     xml = rowsToXML(rows, batchID, depname, depemail, registrant)
     # writeXMLToFile(xml)
-
-    remove(f"temp/{fileID}")
 
     return xml

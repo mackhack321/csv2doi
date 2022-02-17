@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Alert from "./Alert";
 
 function downloadAsFile(data) {
   const element = document.createElement("a");
@@ -16,6 +17,8 @@ export default function Dissertation() {
   const [registrant, setRegistrant] = useState("");
   const [uploadedFile, setUploadedFile] = useState();
   const [fileIsUploaded, setFileIsUploaded] = useState(false);
+  const [errorHappened, setErrorHappened] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,30 +26,50 @@ export default function Dissertation() {
     const fileUpload = new FormData();
     fileUpload.append("file", uploadedFile);
 
-    let uploadRes = await fetch("http://localhost:5003/upload", {
-      method: "POST",
-      mode: "cors",
-      body: fileUpload,
-    });
+    let uploadRes;
+    let metadataRes;
+
+    try {
+      uploadRes = await fetch("http://localhost:5003/upload", {
+        method: "POST",
+        mode: "cors",
+        body: fileUpload,
+      });
+    } catch (error) {
+      setErrorMessage("Error during file upload");
+      setErrorHappened(true);
+    }
 
     let uploadJson = await uploadRes.json();
 
-    let metadataRes = await fetch("http://localhost:5003/dissertation", {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        batchid: batchID,
-        depname: depname,
-        depemail: depemail,
-        registrant: registrant,
-        fileID: uploadJson.fileID,
-      }),
-    });
+    try {
+      metadataRes = await fetch("http://localhost:5003/dissertation", {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          batchid: batchID,
+          depname: depname,
+          depemail: depemail,
+          registrant: registrant,
+          fileID: uploadJson.fileID,
+        }),
+      });
+    } catch (error) {
+      setErrorMessage("Error during conversion");
+      setErrorHappened(true);
+    }
 
-    let json = await metadataRes.json();
+    let xmlJson = await metadataRes.json();
 
-    downloadAsFile(json.response);
+    if (xmlJson.response === "bad headers") {
+      setErrorMessage(
+        "The headers in your CSV file do not match the expected values"
+      );
+      setErrorHappened(true);
+    } else {
+      downloadAsFile(xmlJson.response);
+    }
   };
 
   const changeHandler = (event) => {
@@ -62,6 +85,7 @@ export default function Dissertation() {
             <form onSubmit={handleSubmit}>
               <div className="shadow sm:rounded-md sm:overflow-hidden">
                 <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
+                  {errorHappened && <Alert message={errorMessage} />}
                   <div className="grid grid-cols-3 gap-6">
                     <div className="col-span-3 sm:col-span-2">
                       <label className="block text-sm font-medium text-gray-700">
@@ -138,7 +162,7 @@ export default function Dissertation() {
                             htmlFor="file-upload"
                             className="relative cursor-pointer rounded-md font-medium text-white"
                           >
-                            <div className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <div className="mt-1 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                               <span className="text-lg">Upload a CSV file</span>
                               <input
                                 required
