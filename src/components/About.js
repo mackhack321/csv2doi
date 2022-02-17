@@ -2,7 +2,7 @@ import React from "react";
 
 export default function About() {
   return (
-    <div className="w-screen h-screen px-4 py-5 bg-gray-100">
+    <div className="w-screen px-4 py-5 bg-gray-100">
       <div className="rounded-md px-4 py-3 bg-white">
         <div className="text-4xl pb-5 text-maroon font-bold text-center">
           About CSV2DOI
