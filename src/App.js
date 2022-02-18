@@ -9,7 +9,7 @@ function App() {
       <div className="">
         <Navbar />
         <div className="">
-          <Router>
+          <Router primary={false}>
             <Radio path="/" default />
             <About path="about" />
           </Router>
