@@ -5,7 +5,7 @@ import Radio from "./components/Radio";
 
 function App() {
   return (
-    <div className="flex bg-gray-100">
+    <div className="h-screen bg-gray-100">
       <div className="">
         <Navbar />
         <div className="">
