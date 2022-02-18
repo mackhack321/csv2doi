@@ -6,25 +6,26 @@ import logo from "./csv2doi.png";
 export default function Navbar() {
   return (
     <div>
-      <img src={logo} alt="logo" className="h-24" />
-      <div className="flex space-x-4 px-5 pb-3">
-        <Link to="/">
-          <button
-            className="px-3 py-2 bg-msugreen text-white rounded-md font-medium hover:bg-green-800"
-            type="button"
-          >
-            Home
-          </button>
-        </Link>
-
-        <Link to="about">
-          <button
-            className="px-3 py-2 bg-msugreen text-white rounded-md font-medium hover:bg-green-800"
-            type="button"
-          >
-            About
-          </button>
-        </Link>
+      <div className="inline-flex">
+        <img src={logo} alt="logo" className="h-24" />
+        <div className="flex space-x-4 px-5 py-9 text-xl">
+          <Link to="/">
+            <button
+              className="text-maroon rounded-md font-medium hover:text-msublue"
+              type="button"
+            >
+              Home
+            </button>
+          </Link>
+          <Link to="about">
+            <button
+              className="text-maroon rounded-md font-medium hover:text-msublue"
+              type="button"
+            >
+              About
+            </button>
+          </Link>
+        </div>
       </div>
       <div className="bg-maroon h-1"></div>
     </div>
