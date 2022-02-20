@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Alert from "./Alert";
+import LoadingSpinner from "./LoadingSpinner";
 
 function downloadAsFile(data) {
   const element = document.createElement("a");
@@ -20,6 +21,7 @@ export default function Dataset() {
   const [fileIsUploaded, setFileIsUploaded] = useState(false);
   const [errorHappened, setErrorHappened] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [fetchInProgress, setFetchInProgress] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +34,8 @@ export default function Dataset() {
     let uploadRes;
     let metadataRes;
 
+    setFetchInProgress(true);
+
     try {
       uploadRes = await fetch("http://localhost:5003/upload", {
         method: "POST",
@@ -41,6 +45,7 @@ export default function Dataset() {
     } catch (error) {
       setErrorMessage("Error during file upload");
       setErrorHappened(true);
+      setFetchInProgress(false);
     }
 
     let uploadJson = await uploadRes.json();
@@ -62,6 +67,7 @@ export default function Dataset() {
     } catch (error) {
       setErrorMessage("Error during conversion");
       setErrorHappened(true);
+      setFetchInProgress(false);
     }
 
     let xmlJson = await metadataRes.json();
@@ -71,8 +77,10 @@ export default function Dataset() {
         "The headers in your CSV file do not match the expected values"
       );
       setErrorHappened(true);
+      setFetchInProgress(false);
     } else {
       downloadAsFile(xmlJson.response);
+      setFetchInProgress(false);
     }
   };
 
@@ -223,18 +231,22 @@ export default function Dataset() {
                     type="submit"
                     className="text-lg inline-flex justify-center py-2 px-4 border border-transparent shadow-sm  font-medium rounded-md text-white bg-msugreen hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-7 w-7 pr-2"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                    {fetchInProgress ? (
+                      <LoadingSpinner />
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-7 w-7 pr-2"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
                     Convert to XML
                   </button>
                 </div>
