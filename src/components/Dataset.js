@@ -92,7 +92,7 @@ export default function Dataset() {
   return (
     <div className="App">
       <div>
-        <div className="w-screen px-4 bg-gray-100">
+        <div className="w-full px-4 bg-gray-100">
           <div className="mt-5 md:mt-0 md:col-span-2">
             <form onSubmit={handleSubmit}>
               <div className="shadow sm:rounded-md sm:overflow-hidden">

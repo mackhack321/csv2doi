@@ -88,7 +88,7 @@ export default function Dissertation() {
   return (
     <div className="App">
       <div>
-        <div className="bg-gray-100 w-screen px-4">
+        <div className="bg-gray-100 w-full px-4">
           <div className="mt-5 md:mt-0 md:col-span-2">
             <form onSubmit={handleSubmit}>
               <div className="shadow sm:rounded-md sm:overflow-hidden">
