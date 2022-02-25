@@ -53,6 +53,7 @@ def makeBody(rows):
         body += f"          <given_name>{row['firstname']}</given_name>\n"
         body += f"          <surname>{row['lastname']}</surname>\n"
         body += f"          <affiliation>{row['affiliation']}</affiliation>\n"
+        body += f"          <ORCID authenticated=\"true\">{row['orcid']}</ORCID>\n"
         body += "        </person_name>\n"
         body += "      </contributors>\n"
 
@@ -76,6 +77,20 @@ def makeBody(rows):
         body += f"        <doi>{row['doi']}</doi>\n"
         body += f"        <resource>{row['resource']}</resource>\n"
         body += "      </doi_data>\n"
+
+        body += "      <citation_list>\n"
+        citationIndex = 0
+        
+        for unstructCitation in row['unstructCitation'].split(', '):
+            # print(f"found unstruct citation: {unstructCitation}")
+            body += f"        <citation key=\"ref{citationIndex + 1}\">\n"
+            body += f"          <doi>{row['citationDOI'].split(', ')[citationIndex]}</doi>\n"
+            body += f"          <unstructured_citation>{unstructCitation}</unstructured_citation>\n"
+            body += "        </citation>\n"
+            citationIndex += 1
+
+        body += "      </citation_list>\n"
+            
 
         body += "    </dissertation>\n"
 
