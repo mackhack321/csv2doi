@@ -38,6 +38,41 @@ def makeHead(batchID, depname, depemail, registrant):
 
     return head
 
+def makeCitations(row):
+    cites = ""
+    totalCitePosition = 1
+
+    # handle unstructured citations
+    unstructCitePosition = 1
+    while True:
+        if f"unstructCitation{unstructCitePosition}" not in row.keys(): break # stop if we run out of unstructured citations
+        
+        cites += f"        <citation key=\"ref{totalCitePosition}\">\n"
+        cites += f"          <doi>{row[f'unstructDOI{unstructCitePosition}']}</doi>\n"
+        cites += f"          <unstructured_citation>{row[f'unstructCitation{unstructCitePosition}']}</unstructured_citation>\n"
+        cites += "        </citation>\n"
+        totalCitePosition += 1
+        unstructCitePosition += 1
+
+    # handle structured citations
+    structCitePosition = 1
+    while True:
+        if f"journalTitle{structCitePosition}" not in row.keys(): break # stop if we run out of unstructured citations
+
+        cites += f"        <citation key=\"ref{totalCitePosition}\">\n"
+        cites += f"          <journal_title>{row[f'journalTitle{structCitePosition}']}</journal_title>\n"
+        cites += f"          <author>{row[f'author{structCitePosition}']}</author>\n"
+        cites += f"          <volume>{row[f'volume{structCitePosition}']}</volume>\n"
+        cites += f"          <issue>{row[f'issue{structCitePosition}']}</issue>\n"
+        cites += f"          <first_page>{row[f'first_page{structCitePosition}']}</first_page>\n"
+        cites += f"          <cYear>{row[f'cYear{structCitePosition}']}</cYear>\n"
+        cites += f"          <doi>{row[f'structDOI{structCitePosition}']}</doi>\n"
+        cites += f"          <article_title>{row[f'article_title{structCitePosition}']}</article_title>\n"
+        cites += "        </citation>\n"
+        totalCitePosition += 1
+        structCitePosition += 1
+
+    return cites
 
 def makeBody(rows):
     numDone = 0
@@ -79,15 +114,8 @@ def makeBody(rows):
         body += "      </doi_data>\n"
 
         body += "      <citation_list>\n"
-        citationIndex = 0
         
-        for unstructCitation in row['unstructCitation'].split(', '):
-            # print(f"found unstruct citation: {unstructCitation}")
-            body += f"        <citation key=\"ref{citationIndex + 1}\">\n"
-            body += f"          <doi>{row['citationDOI'].split(', ')[citationIndex]}</doi>\n"
-            body += f"          <unstructured_citation>{unstructCitation}</unstructured_citation>\n"
-            body += "        </citation>\n"
-            citationIndex += 1
+        body += makeCitations(row)
 
         body += "      </citation_list>\n"
             
