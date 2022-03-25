@@ -17,12 +17,12 @@ export default function Navbar() {
               Home
             </button>
           </Link>
-          <Link to="about">
+          <Link to="help">
             <button
               className="text-maroon rounded-md font-medium hover:text-msublue"
               type="button"
             >
-              About
+              Help
             </button>
           </Link>
         </div>

@@ -1,5 +1,5 @@
 import { Router } from "@reach/router";
-import About from "./components/About";
+import Help from "./components/Help";
 import Navbar from "./components/Navbar";
 import Radio from "./components/Radio";
 
@@ -11,7 +11,7 @@ function App() {
         <div className="">
           <Router primary={false}>
             <Radio path="/" default />
-            <About path="about" />
+            <Help path="help" />
           </Router>
         </div>
       </div>
