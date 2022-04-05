@@ -22,6 +22,22 @@ def makeTimestamp():  # crossref wants YYYYMMDDhhmmss
     time += '{:02d}'.format(now.second)
     return time
 
+def makeAuthors(row):
+    authors = ""
+    totalAuthorsPosition = 1
+
+    while True:
+        if f"firstname{totalAuthorsPosition}" not in row.keys() or not row[f'firstname{totalAuthorsPosition}']: break # stop if we run out of authors
+        authors += "          <person_name contributor_role=\"author\" sequence=\"first\">\n"
+        authors += f"            <given_name>{row[f'firstname{totalAuthorsPosition}']}</given_name>\n"
+        authors += f"            <surname>{row[f'lastname{totalAuthorsPosition}']}</surname>\n"
+        authors += f"              <ORCID authenticated=\"true\">{row[f'orcid{totalAuthorsPosition}']}</ORCID>\n"
+        authors += "          </person_name>\n"
+
+        totalAuthorsPosition += 1
+    
+    return authors
+
 
 def makeHead(batchID, depname, depemail, registrant):
     head = ""
@@ -84,12 +100,9 @@ def makeBody(rows):
         body += "    <dissertation publication_type=\"full_text\" language=\"en\">\n"
 
         body += "      <contributors>\n"
-        body += "        <person_name contributor_role=\"author\" sequence=\"first\">\n"
-        body += f"          <given_name>{row['firstname']}</given_name>\n"
-        body += f"          <surname>{row['lastname']}</surname>\n"
-        body += f"          <affiliation>{row['affiliation']}</affiliation>\n"
-        body += f"          <ORCID authenticated=\"true\">{row['orcid']}</ORCID>\n"
-        body += "        </person_name>\n"
+        
+        body += makeAuthors(row)
+
         body += "      </contributors>\n"
 
         body += "      <titles>\n"

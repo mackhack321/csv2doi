@@ -1,2 +1,2 @@
-firstname,lastname,orcid,title,creation date month,creation date day,creation date year,publication date month,publication date day,publication date year,item number,description,doi,resource
-mack,stanley,myorcidlink,a really cool thing,1,20,22,1,20,22,34,this is so cool wow,10.3434/foo,google.com
+firstname1,lastname1,orcid1,firstname2,lastname2,orcid2,title,creation date month,creation date day,creation date year,publication date month,publication date day,publication date year,item number,description,doi,resource
+mack,stanley,myorcidlink,josh,tucker,joshsorcidlink.com,a really cool thing,1,20,2022,1,20,2022,34,this is so cool wow,10.3434/foo,google.com
