@@ -171,9 +171,9 @@ def go(batchID, depname, depemail, registrant, dbname, fileID):
 
     remove(f"temp/{fileID}")
 
-    headersAreValid = validateHeaders(reader.fieldnames)
-    if not headersAreValid:
-        return "bad headers"
+    # headersAreValid = validateHeaders(reader.fieldnames)
+    # if not headersAreValid:
+    #     return "bad headers"
 
     xml = rowsToXML(rows, batchID, depname, depemail, registrant, dbname)
     # writeXMLToFile(xml)
