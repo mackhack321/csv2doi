@@ -61,15 +61,19 @@ export default function Help() {
           </div>
         </div>
         <div className="space-y-2">
-          <p className="text-2xl">A note on the Dissertation datatype</p>
+          <p className="text-2xl">
+            A note on using multiple citations and authors
+          </p>
           <p>
-            In the dissertation template, you will find the headers
-            "unstructCitation1," "unstructDOI1," "unstructCitation2," and
-            "unstructDOI2." This is how you specify unstructured citations in
-            your DOI registration. You may add another unstructured citations by
-            simply inserting two new columns named "unstructCitation3" and
-            "unstructDOI3." This can be repeated for any number of unstructured
-            citations.
+            In the data type templates, you will find that some columns have a
+            suffix of 1 (e.g. firstname1, unstructCitation1 for first author's
+            first name and first unstructured citation, respectively). This is
+            to enable the use of multiple authors or citations. To add more than
+            one of these fields, simply insert the columns you need and give
+            them the same header just with an incremented suffix. For example,
+            to add another author, one would insert the columns firstname2,
+            lastname2, and orcid2 and fill in the data. Take care to not skip a
+            number, as this will lead to unexpected results.
           </p>
         </div>
       </div>
