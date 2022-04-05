@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function Help() {
+  const [numCitations, setNumCitations] = useState(1);
+
   function downloadTemplate(data, name) {
     const element = document.createElement("a");
     const file = new Blob([data], { type: "text/csv" });
@@ -10,11 +12,26 @@ export default function Help() {
     element.click();
   }
 
-  const dissertationHeaders =
-    "firstname1,lastname1,orcid1,affiliation,title,approval date,institution,degree,doi,resource,unstructCitation1,unstructDOI1,unstructCitation2,unstructDOI2,journalTitle1,author1,volume1,issue1,first_page1,cYear1,structDOI1,article_title1";
+  function makeDissertationHeaders() {
+    if (!numCitations) setNumCitations(1);
+    let dissertationHeaders =
+      "firstname1,lastname1,orcid1,affiliation,title,approval date,institution,degree,doi,resource,";
+    for (let i = 1; i <= numCitations; i++) {
+      dissertationHeaders += `unstructCitation${i},unstructDOI1${i},`;
+    }
+    for (let i = 1; i <= numCitations; i++) {
+      dissertationHeaders += `journalTitle${i},author${i},volume${i},issue${i},first_page${i},cYear${i},structDOI${i},article_title${i}`;
+      if (i !== numCitations) {
+        dissertationHeaders += ",";
+      }
+    }
 
-  const datasetHeaders =
-    "firstname1,lastname1,orcid1,title,creation date month,creation date day,creation date year,publication date month,publication date day,publication date year,item number,description,doi,resource";
+    return dissertationHeaders;
+  }
+
+  function makeDatasetHeaders() {
+    return "firstname1,lastname1,orcid1,title,creation date month,creation date day,creation date year,publication date month,publication date day,publication date year,item number,description,doi,resource";
+  }
 
   return (
     <div className="w-screen px-4 py-5 bg-gray-100">
@@ -43,18 +60,24 @@ export default function Help() {
             Download a blank CSV file for your data type using the buttons below
             and fill with your data.
           </p>
+          <p>Enter the number of citations</p>
+          <input
+            type="number"
+            placeholder="1"
+            onChange={(e) => setNumCitations(parseInt(e.target.value))}
+          />
           <div className="space-x-3">
             <button
               className="bg-msugreen text-white rounded-md p-3"
               onClick={() =>
-                downloadTemplate(dissertationHeaders, "dissertation")
+                downloadTemplate(makeDissertationHeaders(), "dissertation")
               }
             >
               Download dissertation template
             </button>
             <button
               className="bg-msugreen text-white rounded-md p-3"
-              onClick={() => downloadTemplate(datasetHeaders, "dataset")}
+              onClick={() => downloadTemplate(makeDatasetHeaders(), "dataset")}
             >
               Download dataset template
             </button>
