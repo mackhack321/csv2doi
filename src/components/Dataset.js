@@ -82,6 +82,8 @@ export default function Dataset() {
       downloadAsFile(xmlJson.response);
       setFetchInProgress(false);
     }
+
+    setFileIsUploaded(false);
   };
 
   const changeHandler = (event) => {

@@ -78,6 +78,8 @@ export default function Dissertation() {
       downloadAsFile(xmlJson.response);
       setFetchInProgress(false);
     }
+
+    setFileIsUploaded(false);
   };
 
   const changeHandler = (event) => {
