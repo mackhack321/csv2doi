@@ -37,7 +37,7 @@ export default function Dataset() {
     setFetchInProgress(true);
 
     try {
-      uploadRes = await fetch("http://localhost:5003/upload", {
+      uploadRes = await fetch("http://130.18.123.77:443/upload", {
         method: "POST",
         mode: "cors",
         body: fileUpload,
@@ -51,7 +51,7 @@ export default function Dataset() {
     let uploadJson = await uploadRes.json();
 
     try {
-      metadataRes = await fetch("http://localhost:5003/dataset", {
+      metadataRes = await fetch("http://130.18.123.77:443/dataset", {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
