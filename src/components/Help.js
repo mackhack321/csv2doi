@@ -17,7 +17,7 @@ export default function Help() {
     let dissertationHeaders =
       "firstname1,lastname1,orcid1,affiliation,title,approval date,institution,degree,doi,resource,";
     for (let i = 1; i <= numCitations; i++) {
-      dissertationHeaders += `unstructCitation${i},unstructDOI1${i},`;
+      dissertationHeaders += `unstructCitation${i},unstructDOI${i},`;
     }
     for (let i = 1; i <= numCitations; i++) {
       dissertationHeaders += `journalTitle${i},author${i},volume${i},issue${i},first_page${i},cYear${i},structDOI${i},article_title${i}`;
