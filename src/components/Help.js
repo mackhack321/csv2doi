@@ -11,10 +11,10 @@ export default function Help() {
   }
 
   const dissertationHeaders =
-    "firstname,lastname,orcid,affiliation,title,approval date,institution,degree,doi,resource,unstructCitation1,unstructDOI1,unstructCitation2,unstructDOI2,journalTitle1,author1,volume1,issue1,first_page1,cYear1,structDOI1,article_title1";
+    "firstname1,lastname1,orcid1,affiliation,title,approval date,institution,degree,doi,resource,unstructCitation1,unstructDOI1,unstructCitation2,unstructDOI2,journalTitle1,author1,volume1,issue1,first_page1,cYear1,structDOI1,article_title1";
 
   const datasetHeaders =
-    "firstname,lastname,orcid,title,creation date month,creation date day,creation date year,publication date month,publication date day,publication date year,item number,description,doi,resource";
+    "firstname1,lastname1,orcid1,title,creation date month,creation date day,creation date year,publication date month,publication date day,publication date year,item number,description,doi,resource";
 
   return (
     <div className="w-screen px-4 py-5 bg-gray-100">
