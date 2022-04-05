@@ -1,2 +1,2 @@
-firstname1,lastname1,orcid1,firstname2,lastname2,orcid2,title,creation date month,creation date day,creation date year,publication date month,publication date day,publication date year,item number,description,doi,resource
-mack,stanley,myorcidlink,josh,tucker,joshsorcidlink.com,a really cool thing,1,20,2022,1,20,2022,34,this is so cool wow,10.3434/foo,google.com
+firstname1,lastname1,orcid1,institutionRor1,institutionIsni1,institutionWikidata1,institutionDept1,title,creation date month,creation date day,creation date year,publication date month,publication date day,publication date year,item number,description,doi,resource
+mack,stanley,https://orcid.org/0000-0002-7508-9033,https://www.myror.com,https://myisni.com,https://mywikidata.com,cse,a really cool thing,1,20,2022,1,20,2022,34,this is so cool wow,10.3434/foo,https://www.google.com
