@@ -31,7 +31,17 @@ def makeAuthors(row):
         authors += "          <person_name contributor_role=\"author\" sequence=\"first\">\n"
         authors += f"            <given_name>{row[f'firstname{totalAuthorsPosition}']}</given_name>\n"
         authors += f"            <surname>{row[f'lastname{totalAuthorsPosition}']}</surname>\n"
-        authors += f"              <ORCID authenticated=\"true\">{row[f'orcid{totalAuthorsPosition}']}</ORCID>\n"
+
+        authors += f"            <affiliations>"
+        authors += f"              <institution>"
+        authors += f"                <institution_id type=\"ror\">{row[f'institutionRor{totalAuthorsPosition}']}</institution_id>"
+        authors += f"                <institution_id type=\"isni\">{row[f'institutionIsni{totalAuthorsPosition}']}</institution_id>"
+        authors += f"                <institution_id type=\"wikidata\">{row[f'institutionWikidata{totalAuthorsPosition}']}</institution_id>"
+        authors += f"                <institution_department>{row[f'institutionDept{totalAuthorsPosition}']}</institution_department>"
+        authors += f"              </institution>"
+        authors += f"            </affiliations>"
+
+        authors += f"            <ORCID authenticated=\"true\">{row[f'orcid{totalAuthorsPosition}']}</ORCID>\n"
         authors += "          </person_name>\n"
 
         totalAuthorsPosition += 1
@@ -146,8 +156,8 @@ def rowsToXML(rows, batchID, depname, depemail, registrant):
     xml = ""
     xml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
     xml += """<doi_batch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.crossref.org/schema/4.8.0 https://www.crossref.org/schemas/crossref4.8.0.xsd"
-    xmlns="http://www.crossref.org/schema/4.8.0" version="4.8.0">\n"""
+    xsi:schemaLocation="http://www.crossref.org/schema/5.3.0 https://www.crossref.org/schemas/crossref5.3.0.xsd"
+    xmlns="http://www.crossref.org/schema/5.3.0" version="5.3.0">\n"""
 
     xml += "  <head>\n"
     xml += makeHead(batchID, depname, depemail, registrant)

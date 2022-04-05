@@ -40,7 +40,17 @@ def makeAuthors(row):
         authors += "          <person_name contributor_role=\"author\" sequence=\"first\">\n"
         authors += f"            <given_name>{row[f'firstname{totalAuthorsPosition}']}</given_name>\n"
         authors += f"            <surname>{row[f'lastname{totalAuthorsPosition}']}</surname>\n"
-        authors += f"              <ORCID authenticated=\"true\">{row[f'orcid{totalAuthorsPosition}']}</ORCID>\n"
+
+        authors += f"            <affiliations>"
+        authors += f"              <institution>"
+        authors += f"                <institution_id type=\"ror\">{row[f'institutionRor{totalAuthorsPosition}']}</institution_id>"
+        authors += f"                <institution_id type=\"isni\">{row[f'institutionIsni{totalAuthorsPosition}']}</institution_id>"
+        authors += f"                <institution_id type=\"wikidata\">{row[f'institutionWikidata{totalAuthorsPosition}']}</institution_id>"
+        authors += f"                <institution_department>{row[f'institutionDept{totalAuthorsPosition}']}</institution_department>"
+        authors += f"              </institution>"
+        authors += f"            </affiliations>"
+
+        authors += f"            <ORCID authenticated=\"true\">{row[f'orcid{totalAuthorsPosition}']}</ORCID>\n"
         authors += "          </person_name>\n"
 
         totalAuthorsPosition += 1
