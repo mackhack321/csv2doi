@@ -181,6 +181,19 @@ def rowsToXML(rows, batchID, depname, depemail, registrant):
 #         file.close()
 #     print(f"Successfully wrote XML to {XML_FILENAME}")
 
+def cleanSpecialChars(s):
+    cleanFile = ""
+
+    for c in s:
+        print(c)
+        if ord(c) > 127:
+            cleanFile += f"&#{ord(c)};"
+        else:
+            cleanFile += c
+    
+    return cleanFile
+
+import io
 
 def go(batchID, depname, depemail, registrant, fileID):
     rows = []
