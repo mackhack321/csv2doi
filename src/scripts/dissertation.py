@@ -1,6 +1,7 @@
 import datetime  # to get the current time because crossref wants a timestamp
 import csv  # to read the input data into a form the program can use
 from os import remove  # to delete the input csv file when done
+import io # for StringIO, reading csv data from a string
 # CSV_FILENAME = "dissertation.csv"  # csv dataset to use
 # XML_FILENAME = "dissertation.xml"  # where to store the generated XML
 
@@ -181,24 +182,22 @@ def rowsToXML(rows, batchID, depname, depemail, registrant):
 #         file.close()
 #     print(f"Successfully wrote XML to {XML_FILENAME}")
 
-def cleanSpecialChars(s):
-    cleanFile = ""
+def cleanString(string):
+    cleaned = ""
 
-    for c in s:
-        print(c)
-        if ord(c) > 127:
-            cleanFile += f"&#{ord(c)};"
+    for char in string:
+        if ord(char) > 127:
+            cleaned += f"&#{ord(char)};"
         else:
-            cleanFile += c
+            cleaned += char
     
-    return cleanFile
-
-import io
+    return cleaned
 
 def go(batchID, depname, depemail, registrant, fileID):
     rows = []
     with open(f"temp/{fileID}", 'r') as file:
-        reader = csv.DictReader(file)
+        cleanedContent = cleanString(file.read())
+        reader = csv.DictReader(io.StringIO(cleanedContent))
         for row in reader:
             rows.append(row)
         file.close()
