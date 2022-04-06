@@ -195,7 +195,7 @@ def cleanString(string):
 
 def go(batchID, depname, depemail, registrant, fileID):
     rows = []
-    with open(f"temp/{fileID}", 'r') as file:
+    with open(f"temp/{fileID}", 'r', encoding="utf-8-sig") as file:
         cleanedContent = cleanString(file.read())
         reader = csv.DictReader(io.StringIO(cleanedContent))
         for row in reader:
