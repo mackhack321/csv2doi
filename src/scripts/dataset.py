@@ -2,7 +2,7 @@ import datetime  # to get the current time because crossref wants a timestamp
 import csv  # to read the input data into a form the program can use
 from os import remove  # to delete the input csv file when done
 import io # for StringIO, reading csv data from a string
-from shared import cleanString, MSU_ROR, MSU_WIKIDATA
+from shared import cleanString, MSU_ROR
 # CSV_FILENAME = "dataset.csv"  # csv dataset to use
 # XML_FILENAME = "dataset.xml"  # where to store the generated XML
 
@@ -71,7 +71,6 @@ def makeBody(rows, dbname):
     body += f"        <titles><title>{dbname}</title></titles>\n"
     body += f"        <institution>\n"
     body += f"          <institution_id type=\"ror\">{MSU_ROR}</institution_id>\n"
-    body += f"          <institution_id type=\"wikidata\">{MSU_WIKIDATA}</institution_id>\n"
     body += f"          <institution_department>{row[f'institutionDept']}</institution_department>\n"
     body += f"        </institution>\n"
     # body += "        <institution>\n"
