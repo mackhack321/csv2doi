@@ -102,12 +102,12 @@ def makeBody(rows):
         body += f"        <year>{row['approval date'].split('/')[2]}</year>\n"
         body += "      </approval_date>\n"
 
-        body += f"      <institution>"
-        body += f"        <institution_id type=\"ror\">{MSU_ROR}</institution_id>"
-        body += f"        <institution_id type=\"isni\">{MSU_ISNI}</institution_id>"
-        body += f"        <institution_id type=\"wikidata\">{MSU_WIKIDATA}</institution_id>"
-        body += f"        <institution_department>{row[f'institutionDept']}</institution_department>"
-        body += f"      </institution>"
+        body += f"      <institution>\n"
+        body += f"        <institution_id type=\"ror\">{MSU_ROR}</institution_id>\n"
+        body += f"        <institution_id type=\"isni\">{MSU_ISNI}</institution_id>\n"
+        body += f"        <institution_id type=\"wikidata\">{MSU_WIKIDATA}</institution_id>\n"
+        body += f"        <institution_department>{row[f'institutionDept']}</institution_department>\n"
+        body += f"      </institution>\n"
 
         body += f"      <degree>{row['degree']}</degree>\n"
 
