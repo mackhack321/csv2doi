@@ -15,22 +15,15 @@ export default function Help() {
   function makeDissertationHeaders() {
     if (!numCitations) setNumCitations(1);
     let dissertationHeaders =
-      "firstname1,lastname1,orcid1,institutionRor1,institutionIsni1,institutionWikidata1,institutionDept1,title,approval date,institution,degree,doi,resource,";
+      "firstname1,lastname1,orcid1,institutionDept,title,approval date,institution,degree,doi,resource,";
     for (let i = 1; i <= numCitations; i++) {
       dissertationHeaders += `unstructCitation${i},unstructDOI${i},`;
     }
-    for (let i = 1; i <= numCitations; i++) {
-      dissertationHeaders += `journalTitle${i},author${i},volume${i},issue${i},first_page${i},cYear${i},structDOI${i},article_title${i}`;
-      if (i !== numCitations) {
-        dissertationHeaders += ",";
-      }
-    }
-
     return dissertationHeaders;
   }
 
   function makeDatasetHeaders() {
-    return "firstname1,lastname1,orcid1,institutionRor1,institutionIsni1,institutionWikidata1,institutionDept1,title,creation date month,creation date day,creation date year,publication date month,publication date day,publication date year,item number,description,doi,resource";
+    return "firstname1,lastname1,orcid1,institutionDept,title,creation date month,creation date day,creation date year,publication date month,publication date day,publication date year,item number,description,doi,resource";
   }
 
   return (
