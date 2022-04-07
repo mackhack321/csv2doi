@@ -62,7 +62,7 @@ def makeCitations(row):
     # handle unstructured citations
     unstructCitePosition = 1
     while True:
-        if f"unstructCitation{unstructCitePosition}" not in row.keys(): break # stop if we run out of unstructured citations
+        if f"unstructCitation{unstructCitePosition}" not in row.keys() or not row[f"unstructCitation{unstructCitePosition}"]: break # stop if we run out of unstructured citations
         
         cites += f"        <citation key=\"ref{unstructCitePosition}\">\n"
         if row[f'unstructDOI{unstructCitePosition}']:
