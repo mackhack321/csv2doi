@@ -5,7 +5,7 @@ export default function Help() {
 
   function downloadTemplate(data, name) {
     const element = document.createElement("a");
-    const file = new Blob([data], { type: "text/csv" });
+    const file = new Blob([data], { type: "text/csv;charset=UTF-8" });
     element.href = URL.createObjectURL(file);
     element.download = `${name}.csv`;
     document.body.appendChild(element);
