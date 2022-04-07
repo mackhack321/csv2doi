@@ -25,6 +25,8 @@ export default function Dissertation() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setErrorHappened(false);
+
     const fileUpload = new FormData();
     fileUpload.append("file", uploadedFile);
 
@@ -103,6 +105,7 @@ export default function Dissertation() {
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
+                          required
                           type="text"
                           value={batchID}
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
@@ -119,6 +122,7 @@ export default function Dissertation() {
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
+                          required
                           type="text"
                           value={depname}
                           placeholder="John Smith"
@@ -135,7 +139,8 @@ export default function Dissertation() {
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
-                          type="text"
+                          required
+                          type="email"
                           value={depemail}
                           placeholder="someone@msstate.edu"
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
@@ -151,6 +156,7 @@ export default function Dissertation() {
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
+                          required
                           type="text"
                           value={registrant}
                           placeholder="Mississippi State University"
