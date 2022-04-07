@@ -1,6 +1,8 @@
 import datetime  # to get the current time because crossref wants a timestamp
 import csv  # to read the input data into a form the program can use
 from os import remove  # to delete the input csv file when done
+import io # for StringIO, reading csv data from a string
+from shared import cleanString
 # CSV_FILENAME = "dataset.csv"  # csv dataset to use
 # XML_FILENAME = "dataset.xml"  # where to store the generated XML
 
@@ -13,12 +15,9 @@ from os import remove  # to delete the input csv file when done
 # # information for the database itself
 # DATABASE_TITLE = "Scholars Junction"
 
-
-def validateHeaders(headers):
-    validHeaders = ['firstname', 'lastname', 'orcid', 'title', 'creation date month', 'creation date day', 'creation date year',
-                    'publication date month', 'publication date day', 'publication date year', 'item number', 'description', 'doi', 'resource']
-    return headers == validHeaders
-
+MSU_ROR = "https://ror.org/0432jq872"
+MSU_ISNI = "https://isni.org/isni/0000000108168287"
+MSU_WIKIDATA = "https://www.wikidata.org/wiki/Q1939211"
 
 def makeTimestamp():  # crossref wants YYYYMMDDhhmmss
     now = datetime.datetime.now()
@@ -36,21 +35,12 @@ def makeAuthors(row):
     totalAuthorsPosition = 1
 
     while True:
-        if f"firstname{totalAuthorsPosition}" not in row.keys(): break # stop if we run out of authors
+        if f"firstname{totalAuthorsPosition}" not in row.keys() or not row[f'firstname{totalAuthorsPosition}']: break # stop if we run out of authors
         authors += "          <person_name contributor_role=\"author\" sequence=\"first\">\n"
         authors += f"            <given_name>{row[f'firstname{totalAuthorsPosition}']}</given_name>\n"
         authors += f"            <surname>{row[f'lastname{totalAuthorsPosition}']}</surname>\n"
-
-        authors += f"            <affiliations>"
-        authors += f"              <institution>"
-        authors += f"                <institution_id type=\"ror\">{row[f'institutionRor{totalAuthorsPosition}']}</institution_id>"
-        authors += f"                <institution_id type=\"isni\">{row[f'institutionIsni{totalAuthorsPosition}']}</institution_id>"
-        authors += f"                <institution_id type=\"wikidata\">{row[f'institutionWikidata{totalAuthorsPosition}']}</institution_id>"
-        authors += f"                <institution_department>{row[f'institutionDept{totalAuthorsPosition}']}</institution_department>"
-        authors += f"              </institution>"
-        authors += f"            </affiliations>"
-
-        authors += f"            <ORCID authenticated=\"true\">{row[f'orcid{totalAuthorsPosition}']}</ORCID>\n"
+        if row[f'orcid{totalAuthorsPosition}']:
+            authors += f"            <ORCID authenticated=\"true\">{row[f'orcid{totalAuthorsPosition}']}</ORCID>\n"
         authors += "          </person_name>\n"
 
         totalAuthorsPosition += 1
@@ -83,6 +73,12 @@ def makeBody(rows, dbname):
     body += "    <database>\n"
     body += "      <database_metadata language=\"en\">\n"
     body += f"        <titles><title>{dbname}</title></titles>\n"
+    body += f"        <institution>\n"
+    body += f"          <institution_id type=\"ror\">{MSU_ROR}</institution_id>\n"
+    body += f"          <institution_id type=\"isni\">{MSU_ISNI}</institution_id>\n"
+    body += f"          <institution_id type=\"wikidata\">{MSU_WIKIDATA}</institution_id>\n"
+    body += f"          <institution_department>{row[f'institutionDept']}</institution_department>\n"
+    body += f"        </institution>\n"
     # body += "        <institution>\n"
     # body += f"          <institution_id type=\"ror\">{DATABASE_ROR}</institution_id>\n"
     # body += f"          <institution_id type=\"isni\">{DATABASE_ISNI}</institution_id>\n"
@@ -179,7 +175,8 @@ def rowsToXML(rows, batchID, depname, depemail, registrant, dbname):
 def go(batchID, depname, depemail, registrant, dbname, fileID):
     rows = []
     with open(f"temp/{fileID}", 'r') as file:
-        reader = csv.DictReader(file)
+        cleanedContent = cleanString(file.read())
+        reader = csv.DictReader(io.StringIO(cleanedContent))
         for row in reader:
             rows.append(row)
         file.close()
