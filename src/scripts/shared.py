@@ -6,6 +6,8 @@ def cleanString(string):
     for char in string:
         if ord(char) > 127:
             cleaned += f"&#{ord(char)};"
+        elif char == '&':
+            cleaned += f'&#38;'
         else:
             cleaned += char
     
