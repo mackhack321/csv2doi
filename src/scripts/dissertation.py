@@ -2,7 +2,7 @@ import datetime  # to get the current time because crossref wants a timestamp
 import csv  # to read the input data into a form the program can use
 from os import remove  # to delete the input csv file when done
 import io # for StringIO, reading csv data from a string
-from shared import cleanString
+from shared import cleanString, MSU_WIKIDATA, MSU_ROR
 # CSV_FILENAME = "dissertation.csv"  # csv dataset to use
 # XML_FILENAME = "dissertation.xml"  # where to store the generated XML
 
@@ -11,11 +11,6 @@ from shared import cleanString
 # DEPOSITOR_NAME = "Mack Stanley"
 # DEPOSITOR_EMAIL = "jms2099@msstate.edu"
 # REGISTRANT = "Mississippi State University"
-
-MSU_ROR = "https://ror.org/0432jq872"
-MSU_ISNI = "https://isni.org/isni/0000000108168287"
-MSU_WIKIDATA = "https://www.wikidata.org/wiki/Q1939211"
-
 
 def makeTimestamp():  # crossref wants YYYYMMDDhhmmss
     now = datetime.datetime.now()
@@ -105,7 +100,6 @@ def makeBody(rows):
 
         body += f"      <institution>\n"
         body += f"        <institution_id type=\"ror\">{MSU_ROR}</institution_id>\n"
-        body += f"        <institution_id type=\"isni\">{MSU_ISNI}</institution_id>\n"
         body += f"        <institution_id type=\"wikidata\">{MSU_WIKIDATA}</institution_id>\n"
         body += f"        <institution_department>{row[f'institutionDept']}</institution_department>\n"
         body += f"      </institution>\n"
