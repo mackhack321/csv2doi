@@ -11,6 +11,10 @@ import io # for StringIO, reading csv data from a string
 # DEPOSITOR_EMAIL = "jms2099@msstate.edu"
 # REGISTRANT = "Mississippi State University"
 
+MSU_ROR = "https://ror.org/0432jq872"
+MSU_ISNI = "https://isni.org/isni/0000000108168287"
+MSU_WIKIDATA = "https://www.wikidata.org/wiki/Q1939211"
+
 
 def makeTimestamp():  # crossref wants YYYYMMDDhhmmss
     now = datetime.datetime.now()
@@ -32,17 +36,8 @@ def makeAuthors(row):
         authors += "          <person_name contributor_role=\"author\" sequence=\"first\">\n"
         authors += f"            <given_name>{row[f'firstname{totalAuthorsPosition}']}</given_name>\n"
         authors += f"            <surname>{row[f'lastname{totalAuthorsPosition}']}</surname>\n"
-
-        authors += f"            <affiliations>"
-        authors += f"              <institution>"
-        authors += f"                <institution_id type=\"ror\">{row[f'institutionRor{totalAuthorsPosition}']}</institution_id>"
-        authors += f"                <institution_id type=\"isni\">{row[f'institutionIsni{totalAuthorsPosition}']}</institution_id>"
-        authors += f"                <institution_id type=\"wikidata\">{row[f'institutionWikidata{totalAuthorsPosition}']}</institution_id>"
-        authors += f"                <institution_department>{row[f'institutionDept{totalAuthorsPosition}']}</institution_department>"
-        authors += f"              </institution>"
-        authors += f"            </affiliations>"
-
-        authors += f"            <ORCID authenticated=\"true\">{row[f'orcid{totalAuthorsPosition}']}</ORCID>\n"
+        if row[f'orcid{totalAuthorsPosition}']:
+            authors += f"            <ORCID authenticated=\"true\">{row[f'orcid{totalAuthorsPosition}']}</ORCID>\n"
         authors += "          </person_name>\n"
 
         totalAuthorsPosition += 1
@@ -67,37 +62,18 @@ def makeHead(batchID, depname, depemail, registrant):
 
 def makeCitations(row):
     cites = ""
-    totalCitePosition = 1
 
     # handle unstructured citations
     unstructCitePosition = 1
     while True:
         if f"unstructCitation{unstructCitePosition}" not in row.keys(): break # stop if we run out of unstructured citations
         
-        cites += f"        <citation key=\"ref{totalCitePosition}\">\n"
-        cites += f"          <doi>{row[f'unstructDOI{unstructCitePosition}']}</doi>\n"
+        cites += f"        <citation key=\"ref{unstructCitePosition}\">\n"
+        if row[f'unstructDOI{unstructCitePosition}']:
+            cites += f"          <doi>{row[f'unstructDOI{unstructCitePosition}']}</doi>\n"
         cites += f"          <unstructured_citation>{row[f'unstructCitation{unstructCitePosition}']}</unstructured_citation>\n"
         cites += "        </citation>\n"
-        totalCitePosition += 1
         unstructCitePosition += 1
-
-    # handle structured citations
-    structCitePosition = 1
-    while True:
-        if f"journalTitle{structCitePosition}" not in row.keys(): break # stop if we run out of unstructured citations
-
-        cites += f"        <citation key=\"ref{totalCitePosition}\">\n"
-        cites += f"          <journal_title>{row[f'journalTitle{structCitePosition}']}</journal_title>\n"
-        cites += f"          <author>{row[f'author{structCitePosition}']}</author>\n"
-        cites += f"          <volume>{row[f'volume{structCitePosition}']}</volume>\n"
-        cites += f"          <issue>{row[f'issue{structCitePosition}']}</issue>\n"
-        cites += f"          <first_page>{row[f'first_page{structCitePosition}']}</first_page>\n"
-        cites += f"          <cYear>{row[f'cYear{structCitePosition}']}</cYear>\n"
-        cites += f"          <doi>{row[f'structDOI{structCitePosition}']}</doi>\n"
-        cites += f"          <article_title>{row[f'article_title{structCitePosition}']}</article_title>\n"
-        cites += "        </citation>\n"
-        totalCitePosition += 1
-        structCitePosition += 1
 
     return cites
 
@@ -126,9 +102,12 @@ def makeBody(rows):
         body += f"        <year>{row['approval date'].split('/')[2]}</year>\n"
         body += "      </approval_date>\n"
 
-        body += "      <institution>\n"
-        body += f"        <institution_name>{row['institution']}</institution_name>\n"
-        body += "      </institution>\n"
+        body += f"      <institution>"
+        body += f"        <institution_id type=\"ror\">{MSU_ROR}</institution_id>"
+        body += f"        <institution_id type=\"isni\">{MSU_ISNI}</institution_id>"
+        body += f"        <institution_id type=\"wikidata\">{MSU_WIKIDATA}</institution_id>"
+        body += f"        <institution_department>{row[f'institutionDept']}</institution_department>"
+        body += f"      </institution>"
 
         body += f"      <degree>{row['degree']}</degree>\n"
 
