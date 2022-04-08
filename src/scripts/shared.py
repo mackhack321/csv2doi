@@ -7,7 +7,11 @@ def cleanString(string):
         if ord(char) > 127:
             cleaned += f"&#{ord(char)};"
         elif char == '&':
-            cleaned += f'&#38;'
+            cleaned += f"&#38;"
+        elif char == '<':
+            cleaned += f"&#60;"
+        elif char == '>':
+            cleaned += f"&#62;"
         else:
             cleaned += char
     
