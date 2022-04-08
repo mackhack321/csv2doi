@@ -29,7 +29,10 @@ def makeAuthors(row):
 
     while True:
         if f"firstname{totalAuthorsPosition}" not in row.keys() or not row[f'firstname{totalAuthorsPosition}']: break # stop if we run out of authors
-        authors += "          <person_name contributor_role=\"author\" sequence=\"first\">\n"
+        if totalAuthorsPosition == 1:
+            authors += "          <person_name contributor_role=\"author\" sequence=\"first\">\n"
+        else:
+            authors += "          <person_name contributor_role=\"author\" sequence=\"additional\">\n"
         authors += f"            <given_name>{row[f'firstname{totalAuthorsPosition}']}</given_name>\n"
         authors += f"            <surname>{row[f'lastname{totalAuthorsPosition}']}</surname>\n"
         if row[f'orcid{totalAuthorsPosition}']:
