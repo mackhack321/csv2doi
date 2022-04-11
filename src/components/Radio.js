@@ -12,7 +12,10 @@ export default function Radio() {
           Select Datatype:
         </label>
 
-        <select className="w-fit" onChange={(e) => setRadio(e.target.value)}>
+        <select
+          className="w-fit rounded-md shadow-sm"
+          onChange={(e) => setRadio(e.target.value)}
+        >
           <option value="dissertation">Dissertation</option>
           <option value="dataset">Dataset</option>
           <option value="refUpdate">Reference Update</option>
