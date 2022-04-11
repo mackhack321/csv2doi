@@ -106,6 +106,8 @@ export default function Dissertation() {
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
                           required
+                          minLength={4}
+                          maxLength={100}
                           type="text"
                           value={batchID}
                           className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
