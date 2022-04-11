@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { dissertationHeaders, datasetHeaders } from "../utils/Templates";
 
 export default function Help() {
   const [numCitations, setNumCitations] = useState(1);
@@ -10,20 +11,6 @@ export default function Help() {
     element.download = `${name}.csv`;
     document.body.appendChild(element);
     element.click();
-  }
-
-  function makeDissertationHeaders() {
-    if (!numCitations) setNumCitations(1);
-    let dissertationHeaders =
-      "firstname1,lastname1,orcid1,institutionDept,title,approval date,institution,degree,doi,resource,";
-    for (let i = 1; i <= numCitations; i++) {
-      dissertationHeaders += `unstructCitation${i},unstructDOI${i},`;
-    }
-    return dissertationHeaders;
-  }
-
-  function makeDatasetHeaders() {
-    return "firstname1,lastname1,orcid1,institutionDept,title,creation date month,creation date day,creation date year,publication date month,publication date day,publication date year,item number,description,doi,resource";
   }
 
   return (
@@ -63,14 +50,17 @@ export default function Help() {
             <button
               className="bg-msugreen text-white rounded-md p-3"
               onClick={() =>
-                downloadTemplate(makeDissertationHeaders(), "dissertation")
+                downloadTemplate(
+                  dissertationHeaders(numCitations),
+                  "dissertation"
+                )
               }
             >
               Download dissertation template
             </button>
             <button
               className="bg-msugreen text-white rounded-md p-3"
-              onClick={() => downloadTemplate(makeDatasetHeaders(), "dataset")}
+              onClick={() => downloadTemplate(datasetHeaders(), "dataset")}
             >
               Download dataset template
             </button>
