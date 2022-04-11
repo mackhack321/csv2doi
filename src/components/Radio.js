@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Dataset from "./Dataset";
 import Dissertation from "./Dissertation";
+import RefUpdate from "./RefUpdate";
 
 export default function Radio() {
   const [radio, setRadio] = useState("dissertation");
@@ -34,10 +35,24 @@ export default function Radio() {
             }}
           />
           <label className="pl-2 font-medium text-gray-700">Dataset</label>
+          <br />
+          <input
+            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+            type="radio"
+            checked={radio === "refUpdate"}
+            value="refUpdate"
+            onChange={(e) => {
+              setRadio(e.target.value);
+            }}
+          />
+          <label className="pl-2 font-medium text-gray-700">
+            Reference Update
+          </label>
         </div>
       </form>
       {radio === "dataset" && <Dataset />}
       {radio === "dissertation" && <Dissertation />}
+      {radio === "refUpdate" && <RefUpdate />}
     </div>
   );
 }

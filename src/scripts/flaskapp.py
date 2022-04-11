@@ -5,6 +5,7 @@ from flask_cors import CORS
 
 import dataset as datasetConverter
 import dissertation as dissertationConverter
+import refUpdate as refUpdateConverter
 
 
 app = Flask(__name__)
@@ -52,6 +53,22 @@ def dataset():
 
     xml = datasetConverter.go(
         batchID, depname, depemail, registrant, dbname, fileID)
+
+    response = jsonify(
+        {"response": xml})
+    return response
+
+
+@app.route("/refUpdate", methods=["POST"])
+def refUpdate():
+    batchID = request.json["batchid"]
+    depname = request.json["depname"]
+    depemail = request.json["depemail"]
+
+    fileID = request.json["fileID"]
+
+    xml = refUpdateConverter.go(
+        batchID, depname, depemail, fileID)
 
     response = jsonify(
         {"response": xml})

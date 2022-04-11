@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { dissertationHeaders, datasetHeaders } from "../utils/Templates";
+import {
+  makeDissertationHeaders,
+  makeDatasetHeaders,
+  makeRefUpdateHeaders,
+} from "../utils/Templates";
 
 export default function Help() {
   const [numCitations, setNumCitations] = useState(1);
@@ -51,7 +55,7 @@ export default function Help() {
               className="bg-msugreen text-white rounded-md p-3"
               onClick={() =>
                 downloadTemplate(
-                  dissertationHeaders(numCitations),
+                  makeDissertationHeaders(numCitations),
                   "dissertation"
                 )
               }
@@ -60,9 +64,20 @@ export default function Help() {
             </button>
             <button
               className="bg-msugreen text-white rounded-md p-3"
-              onClick={() => downloadTemplate(datasetHeaders(), "dataset")}
+              onClick={() => downloadTemplate(makeDatasetHeaders(), "dataset")}
             >
               Download dataset template
+            </button>
+            <button
+              className="bg-msugreen text-white rounded-md p-3"
+              onClick={() =>
+                downloadTemplate(
+                  makeRefUpdateHeaders(numCitations),
+                  "refUpdate"
+                )
+              }
+            >
+              Download reference update template
             </button>
           </div>
         </div>
