@@ -3,7 +3,7 @@ import Dataset from "./Dataset";
 import Dissertation from "./Dissertation";
 
 export default function Radio() {
-  const [radio, setRadio] = useState("dataset");
+  const [radio, setRadio] = useState("dissertation");
   return (
     <div className="py-4 rounded-md">
       <form className="flex flex-col py-8 px-6 text-xl ">
@@ -16,17 +16,6 @@ export default function Radio() {
           <input
             className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
             type="radio"
-            checked={radio === "dataset"}
-            value="dataset"
-            onChange={(e) => {
-              setRadio(e.target.value);
-            }}
-          />
-          <label className="pl-2 font-medium text-gray-700">Dataset</label>
-          <br />
-          <input
-            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-            type="radio"
             checked={radio === "dissertation"}
             value="dissertation"
             onChange={(e) => {
@@ -34,6 +23,17 @@ export default function Radio() {
             }}
           />
           <label className="pl-2 font-medium text-gray-700">Dissertation</label>
+          <br />
+          <input
+            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+            type="radio"
+            checked={radio === "dataset"}
+            value="dataset"
+            onChange={(e) => {
+              setRadio(e.target.value);
+            }}
+          />
+          <label className="pl-2 font-medium text-gray-700">Dataset</label>
         </div>
       </form>
       {radio === "dataset" && <Dataset />}
