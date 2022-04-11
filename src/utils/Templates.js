@@ -1,8 +1,5 @@
 function dissertationHeaders(numCitations) {
-  if (!numCitations) {
-    console.log("num citations is nan");
-    numCitations = 1;
-  }
+  if (!numCitations) numCitations = 1;
   let dissertationHeaders =
     "firstname1,lastname1,orcid1,institutionDept,title,approval date,institution,degree,doi,resource,";
   for (let i = 1; i <= numCitations; i++) {
