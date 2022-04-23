@@ -13,7 +13,6 @@ export default function Radio() {
           Select Datatype:
         </label>
 
-<<<<<<< HEAD
         <select
           className="w-fit rounded-md shadow-sm"
           onChange={(e) => setRadio(e.target.value)}
@@ -23,56 +22,6 @@ export default function Radio() {
           <option value="journal">Journal</option>
           <option value="refUpdate">Reference Update</option>
         </select>
-=======
-        <div className="justify-center ">
-          {/* <h1>Radio value is : {radio}</h1> */}
-          <input
-            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-            type="radio"
-            checked={radio === "dissertation"}
-            value="dissertation"
-            onChange={(e) => {
-              setRadio(e.target.value);
-            }}
-          />
-          <label className="pl-2 font-medium text-gray-700">Dissertation</label>
-          <br />
-          <input
-            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-            type="radio"
-            checked={radio === "dataset"}
-            value="dataset"
-            onChange={(e) => {
-              setRadio(e.target.value);
-            }}
-          />
-          <label className="pl-2 font-medium text-gray-700">Dataset</label>
-          <br />
-          <input
-            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-            type="radio"
-            checked={radio === "journal"}
-            value="journal"
-            onChange={(e) => {
-              setRadio(e.target.value);
-            }}
-          />
-          <label className="pl-2 font-medium text-gray-700">Journal</label>
-          <br />
-          <input
-            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-            type="radio"
-            checked={radio === "refUpdate"}
-            value="refUpdate"
-            onChange={(e) => {
-              setRadio(e.target.value);
-            }}
-          />
-          <label className="pl-2 font-medium text-gray-700">
-            Reference Update
-          </label>
-        </div>
->>>>>>> origin/main
       </form>
       {radio === "dataset" && <Dataset />}
       {radio === "dissertation" && <Dissertation />}
