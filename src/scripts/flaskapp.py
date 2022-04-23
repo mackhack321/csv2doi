@@ -6,6 +6,7 @@ from flask_cors import CORS
 import dataset as datasetConverter
 import dissertation as dissertationConverter
 import refUpdate as refUpdateConverter
+import journal as journalConverter
 
 
 app = Flask(__name__)
@@ -69,6 +70,23 @@ def refUpdate():
 
     xml = refUpdateConverter.go(
         batchID, depname, depemail, fileID)
+
+    response = jsonify(
+        {"response": xml})
+    return response
+
+
+@app.route("/journal", methods=["POST"])
+def journal():
+    batchID = request.json["batchid"]
+    depname = request.json["depname"]
+    depemail = request.json["depemail"]
+    registrant = request.json["registrant"]
+
+    fileID = request.json["fileID"]
+
+    xml = journalConverter.go(
+        batchID, depname, depemail, registrant, fileID)
 
     response = jsonify(
         {"response": xml})
