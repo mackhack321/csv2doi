@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Dataset from "./Dataset";
 import Dissertation from "./Dissertation";
 import RefUpdate from "./RefUpdate";
+import Journal from "./Journal";
 
 export default function Radio() {
   const [radio, setRadio] = useState("dissertation");
@@ -18,12 +19,14 @@ export default function Radio() {
         >
           <option value="dissertation">Dissertation</option>
           <option value="dataset">Dataset</option>
+          <option value="journal">Journal</option>
           <option value="refUpdate">Reference Update</option>
         </select>
       </form>
       {radio === "dataset" && <Dataset />}
       {radio === "dissertation" && <Dissertation />}
       {radio === "refUpdate" && <RefUpdate />}
+      {radio === "journal" && <Journal />}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import {
   makeDissertationHeaders,
   makeDatasetHeaders,
   makeRefUpdateHeaders,
+  makeJournalHeaders,
 } from "../utils/Templates";
 
 export default function Help() {
@@ -78,6 +79,14 @@ export default function Help() {
               }
             >
               Download reference update template
+            </button>
+            <button
+              className="bg-msugreen text-white rounded-md p-3"
+              onClick={() =>
+                downloadTemplate(makeJournalHeaders(numCitations), "journal")
+              }
+            >
+              Download journal template
             </button>
           </div>
         </div>
