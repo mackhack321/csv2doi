@@ -27,7 +27,6 @@ export default function Radio() {
       {radio === "dissertation" && <Dissertation />}
       {radio === "journal" && <Journal />}
       {radio === "refUpdate" && <RefUpdate />}
-      {radio === "journal" && <Journal />}
     </div>
   );
 }
