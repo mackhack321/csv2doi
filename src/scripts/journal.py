@@ -32,7 +32,7 @@ def makeAuthors(row):
         authors += "              <institution>\n"
 
         authors += f"                <institution_name>{row[f'instName{totalAuthorsPosition}']}</institution_name>\n"
-        authors += f"                <institution_department>{row[f'instDept{totalAuthorsPosition}']}</institution_department>\n"
+        # authors += f"                <institution_department>{row[f'instDept{totalAuthorsPosition}']}</institution_department>\n"
 
         authors += "              </institution>\n"
 

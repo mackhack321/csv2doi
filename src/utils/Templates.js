@@ -21,10 +21,16 @@ function makeRefUpdateHeaders(numCitations) {
   return refUpdateHeaders;
 }
 
-function makeJournalHeaders(numCitations) {
+function makeJournalHeaders(numCitations, numAuthors) {
   if (!numCitations) numCitations = 1; // check for NaN
-  let journalHeaders =
-    "firstname1,lastname1,instName1,instDept1,orcid1,fullTitle,abbrevTitle,issn,journalDOI,journalResource,articleTitle,abstract,publicationDate,acceptanceDate,itemNumber,crossmarkVersion,crossmarkPolicy,crossmarkReceivedDate,crossmarkAcceptedDate,funderName,funderIdentifier,awardNumber,articleDOI,articleResource,";
+  if (!numAuthors) numAuthors = 1; // check for NaN
+  console.log(numAuthors);
+  let journalHeaders = "";
+  for (let i = 1; i <= numAuthors; i++) {
+    journalHeaders += `firstname${i},lastname${i},instName${i},orcid${i},`;
+  }
+  journalHeaders +=
+    "fullTitle,abbrevTitle,issn,journalDOI,journalResource,articleTitle,abstract,publicationDate,acceptanceDate,itemNumber,crossmarkVersion,crossmarkPolicy,crossmarkReceivedDate,crossmarkAcceptedDate,funderName,funderIdentifier,awardNumber,articleDOI,articleResource,";
   for (let i = 1; i <= numCitations; i++) {
     journalHeaders += `unstructCitation${i},unstructDOI${i},`;
   }

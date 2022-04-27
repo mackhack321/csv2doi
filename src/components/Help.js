@@ -8,6 +8,7 @@ import {
 
 export default function Help() {
   const [numCitations, setNumCitations] = useState(1);
+  const [numAuthors, setNumAuthors] = useState(1);
 
   function downloadTemplate(data, name) {
     const element = document.createElement("a");
@@ -45,12 +46,24 @@ export default function Help() {
             Download a blank CSV file for your data type using the buttons below
             and fill with your data.
           </p>
-          <p>Enter the number of citations</p>
-          <input
-            type="number"
-            placeholder="1"
-            onChange={(e) => setNumCitations(parseInt(e.target.value))}
-          />
+          <div className="flex space-x-5">
+            <div>
+              <p>Enter the number of citations</p>
+              <input
+                type="number"
+                placeholder="1"
+                onChange={(e) => setNumCitations(parseInt(e.target.value))}
+              />
+            </div>
+            <div>
+              <p>Enter the number of authors (Journal datatype)</p>
+              <input
+                type="number"
+                placeholder="1"
+                onChange={(e) => setNumAuthors(parseInt(e.target.value))}
+              />
+            </div>
+          </div>
           <div className="space-x-3">
             <button
               className="bg-msugreen text-white rounded-md p-3"
@@ -83,7 +96,10 @@ export default function Help() {
             <button
               className="bg-msugreen text-white rounded-md p-3"
               onClick={() =>
-                downloadTemplate(makeJournalHeaders(numCitations), "journal")
+                downloadTemplate(
+                  makeJournalHeaders(numCitations, numAuthors),
+                  "journal"
+                )
               }
             >
               Download journal template
