@@ -120,42 +120,55 @@ def makeBody(rows):
         body += f"          <year>{row['publicationDate'].split('/')[2]}</year>\n"
         body += "        </publication_date>\n"
 
-        body += "        <acceptance_date media_type=\"online\">\n"
-        body += f"          <month>{'{:02d}'.format(int(row['acceptanceDate'].split('/')[0]))}</month>\n"
-        body += f"          <day>{'{:02d}'.format(int(row['acceptanceDate'].split('/')[1]))}</day>\n"
-        body += f"          <year>{row['acceptanceDate'].split('/')[2]}</year>\n"
-        body += "        </acceptance_date>\n"
+        if row['acceptanceDate']:
+            body += "        <acceptance_date media_type=\"online\">\n"
+            body += f"          <month>{'{:02d}'.format(int(row['acceptanceDate'].split('/')[0]))}</month>\n"
+            body += f"          <day>{'{:02d}'.format(int(row['acceptanceDate'].split('/')[1]))}</day>\n"
+            body += f"          <year>{row['acceptanceDate'].split('/')[2]}</year>\n"
+            body += "        </acceptance_date>\n"
 
-        body += "        <publisher_item>\n"
-        body += f"        <item_number item_number_type=\"article_number\">{row['itemNumber']}</item_number>\n"
-        body += "        </publisher_item>\n"
+        if row['itemNumber']:
+            body += "        <publisher_item>\n"
+            body += f"        <item_number item_number_type=\"article_number\">{row['itemNumber']}</item_number>\n"
+            body += "        </publisher_item>\n"
 
-        body += "        <crossmark>\n"
-        body += f"          <crossmark_version>{row['crossmarkVersion']}</crossmark_version>\n"
-        body += f"          <crossmark_policy>{row['crossmarkPolicy']}</crossmark_policy>\n"
-        body += "          <custom_metadata>"
+        if row['crossmarkVersion'] or row['crossmarkPolicy'] or row['crossmarkReceivedDate'] or row['crossmarkAcceptedDate'] or row['funderName'] or row['funderIdentifier'] or row['awardNumber']:
+            body += "        <crossmark>\n"
+            
+            if row['crossmarkVersion']:
+                body += f"          <crossmark_version>{row['crossmarkVersion']}</crossmark_version>\n"
+            if row['crossmarkPolicy']:
+                body += f"          <crossmark_policy>{row['crossmarkPolicy']}</crossmark_policy>\n"
+            body += "          <custom_metadata>"
 
-        body += f"            <assertion name=\"received\" label=\"Received\" group_name=\"publication_history\" group_label=\"Publication History\" order=\"0\">{row['crossmarkReceivedDate']}</assertion>\n"
-        body += f"            <assertion name=\"accepted\" label=\"Accepted\" group_name=\"publication_history\" group_label=\"Publication History\" order=\"1\">{row['crossmarkAcceptedDate']}</assertion>\n"
+            if row['crossmarkReceivedDate']:
+                body += f"            <assertion name=\"received\" label=\"Received\" group_name=\"publication_history\" group_label=\"Publication History\" order=\"0\">{row['crossmarkReceivedDate']}</assertion>\n"
+            if row['crossmarkAcceptedDate']:
+                body += f"            <assertion name=\"accepted\" label=\"Accepted\" group_name=\"publication_history\" group_label=\"Publication History\" order=\"1\">{row['crossmarkAcceptedDate']}</assertion>\n"
 
-        body += "            <fr:program name=\"fundref\">\n"
-        body += "              <fr:assertion name=\"fundgroup\">\n"
-        body += f"                <fr:assertion name=\"funder_name\">{row['funderName']}\n"
-        body += f"                  <fr:assertion name=\"funder_identifier\">{row['funderIdentifier']}</fr:assertion>\n"
-        body += "                </fr:assertion>\n"
+            if row['funderName'] or row['funderIdentifier'] or row['awardNumber']:
+                body += "            <fr:program name=\"fundref\">\n"
+                body += "              <fr:assertion name=\"fundgroup\">\n"
 
-        body += f"                <fr:assertion name=\"award_number\">{row['awardNumber']}</fr:assertion>\n"
+                if row['funderName']:
+                    body += f"                <fr:assertion name=\"funder_name\">{row['funderName']}\n"
+                if row['funderIdentifier']:
+                    body += f"                  <fr:assertion name=\"funder_identifier\">{row['funderIdentifier']}</fr:assertion>\n"
+                body += "                </fr:assertion>\n"
 
-        body += "              </fr:assertion>\n"
-        body += "            </fr:program>\n"
+                if row['awardNumber']:
+                    body += f"                <fr:assertion name=\"award_number\">{row['awardNumber']}</fr:assertion>\n"
 
-        body += "            <program xmlns=\"http://www.crossref.org/AccessIndicators.xsd\">\n"
-        body += "              <free_to_read/>\n"
-        body += "              <license_ref applies_to=\"vor\" start_date=\"2008-08-13\">http://creativecommons.org/licenses/by/3.0/deed.en_US</license_ref>\n"
-        body += "            </program>\n"
+                body += "              </fr:assertion>\n"
+                body += "            </fr:program>\n"
 
-        body += "          </custom_metadata>"
-        body += "        </crossmark>\n"
+            body += "            <program xmlns=\"http://www.crossref.org/AccessIndicators.xsd\">\n"
+            body += "              <free_to_read/>\n"
+            body += "              <license_ref applies_to=\"vor\" start_date=\"2008-08-13\">http://creativecommons.org/licenses/by/3.0/deed.en_US</license_ref>\n"
+            body += "            </program>\n"
+
+            body += "          </custom_metadata>"
+            body += "        </crossmark>\n"
 
         body += "        <doi_data>\n"
         body += f"          <doi>{row['articleDOI']}</doi>\n"
