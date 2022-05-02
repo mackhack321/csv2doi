@@ -114,11 +114,12 @@ def makeBody(rows):
         body += f"          <jats:p xml:lang=\"en\">{row['abstract']}</jats:p>\n"
         body += "        </jats:abstract>\n"
 
-        body += "        <publication_date media_type=\"online\">\n"
-        body += f"          <month>{'{:02d}'.format(int(row['publicationDate'].split('/')[0]))}</month>\n"
-        body += f"          <day>{'{:02d}'.format(int(row['publicationDate'].split('/')[1]))}</day>\n"
-        body += f"          <year>{row['publicationDate'].split('/')[2]}</year>\n"
-        body += "        </publication_date>\n"
+        if row['publicationDate']:
+            body += "        <publication_date media_type=\"online\">\n"
+            body += f"          <month>{'{:02d}'.format(int(row['publicationDate'].split('/')[0]))}</month>\n"
+            body += f"          <day>{'{:02d}'.format(int(row['publicationDate'].split('/')[1]))}</day>\n"
+            body += f"          <year>{row['publicationDate'].split('/')[2]}</year>\n"
+            body += "        </publication_date>\n"
 
         if row['acceptanceDate']:
             body += "        <acceptance_date media_type=\"online\">\n"
