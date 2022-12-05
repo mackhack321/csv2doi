@@ -1,9 +1,16 @@
 # csv2doi
 
-CSV2DOI is a part of my work as a web development student assitant for Mississippi State University Libraries. CSV2DOI is a tool that was used by the Office of Thesis and Dissertation Format Review for batch-registering DOIs (Digital Object Identifier) for graduate and honors theses and dissertations. Bulk DOI information was uploaded into CSV2DOI in a CSV file, and the file was passed to the Flask backend which parsed the CSV file and generated an XML file that met the formatting requirements of Crossref, a DOI registration agency. This XML file could then be uploaded ito Crossref's web portal and the new DOIs would be created. The project has since been sunset, but I have preserved it for demonstration purposes.
+`csv2doi` is one of my projects as a web development student assistant for Mississippi State University Libraries. It was used to batch-register DOIs using an input CSV file.
+
+## Setting up the development server
+
+1. Clone this repository and [install `yarn`](https://classic.yarnpkg.com/lang/en/docs/install/) if you don't already have it.
+2. In the project directory, run `yarn` to install dependencies.
+3. Run `yarn start` to start the development server.
+4. Use `pip` to install the `flask` and `flask_cors` Python modules.
+5. Start the Flask development with `python3 src/scripts/flaskapp.py`.
 
 MSU Libraries Contacts:
 
-Paul Huddleston
-
-Josh Tucker
+- [Paul Huddleston](https://www.library.msstate.edu/directory/paul-huddleston-pch1)
+- [Josh Tucker](https://www.library.msstate.edu/directory/josh-tucker-jet457)
